@@ -1,6 +1,6 @@
-const { app, BrowserWindow, 
+const { app, BrowserWindow,
     Tray, Menu, nativeImage,
-    ipcMain
+    ipcMain, globalShortcut
 } = require('electron');
 
 //Tray
@@ -16,8 +16,54 @@ function create_tray() {
     tray.setContextMenu(contextMenu);
 };
 
+//Main Window
+let main_window = null;
+function create_main_window(){
+    main_window = new BrowserWindow({
+        frame: false,
+        transparent: true,
+        alwaysOnTop: true,
+        resizable: false,
+        show: false,
+        fullscreen: true,
+        disableAutoHideCursor: true,
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false
+        }
+    });
+    main_window.loadFile('renderer.html');
+    main_window.setSkipTaskbar(true);
+    main_window.setVisibleOnAllWorkspaces(false);
+    main_window.webContents.openDevTools();
+};
 
-function toggle_caps_status(){}; //TODO:
+//Caps Lock Listener
+var caps_status = false;
+function create_caps_listener(){
+    globalShortcut.register('CapsLock', ()=>{
+        caps_status = !caps_status;
+        if(caps_status){
+            main_window.show();
+            main_window.webContents.send('reflash', null);
+        }else{
+            main_window.hide();
+        };
+    });
+};
+function toggle_caps_status(){
+    caps_status = !caps_status;
+    if(caps_status){
+        main_window.show();
+        main_window.webContents.send('reflash', null);
+    }else{
+        main_window.hide();
+    };
+};
+
+
+
 function show_settings(){}; //TODO:
 
 
@@ -29,4 +75,9 @@ function show_settings(){}; //TODO:
 
 app.on('ready',()=>{
     create_tray();
+    create_main_window();
+    create_caps_listener();
+});
+app.on('will-quit',()=>{
+    globalShortcut.unregisterAll();
 });
