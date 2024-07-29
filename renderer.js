@@ -1,5 +1,7 @@
 const { ipcRenderer } = require('electron');
 
+ele_d_shot = document.getElementsByClassName('screenshot')[0];
+
 ipcRenderer.on('reflash',(event,datas)=>{
-    console.log('235eqrw6tuas32468reyiga');
+    ele_d_shot.src = datas['screenshot'];
 });

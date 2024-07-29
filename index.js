@@ -1,6 +1,6 @@
 const { app, BrowserWindow,
     Tray, Menu, nativeImage,
-    ipcMain, globalShortcut
+    ipcMain, globalShortcut, desktopCapturer
 } = require('electron');
 
 //Tray
@@ -42,26 +42,31 @@ function create_main_window(){
 //Caps Lock Listener
 var caps_status = false;
 function create_caps_listener(){
-    globalShortcut.register('CapsLock', ()=>{
+    globalShortcut.register('CapsLock', async()=>{
         caps_status = !caps_status;
         if(caps_status){
+            main_window.webContents.send('reflash', {screenshot: await get_screenshot()});
             main_window.show();
-            main_window.webContents.send('reflash', null);
         }else{
             main_window.hide();
         };
     });
 };
-function toggle_caps_status(){
+async function toggle_caps_status(){
     caps_status = !caps_status;
     if(caps_status){
+        main_window.webContents.send('reflash', {screenshot: await get_screenshot()});
         main_window.show();
-        main_window.webContents.send('reflash', null);
     }else{
         main_window.hide();
     };
 };
 
+async function get_screenshot(){
+    let source = (await desktopCapturer.getSources({types: ['screen']}))[0];
+    let imgdata = source.thumbnail.toDataURL();
+    return imgdata;
+};
 
 
 function show_settings(){}; //TODO:
