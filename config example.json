@@ -1,0 +1,19 @@
+{
+    "collected_tools_id": [
+        "example_tool"
+    ],
+    "costom_tools": [
+        {
+            "id": "example_tool",
+            "if": "//JS conditions code",
+            "command": "cmd command here"
+        }
+    ],
+    "plugin_tools": [
+        {
+            "id": "example_plugin",
+            "path": "plugin_folder/plugin.py",
+            "json_command": ["window_name","screenshot"]
+        }
+    ]
+}
