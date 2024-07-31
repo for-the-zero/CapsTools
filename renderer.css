@@ -1,0 +1,46 @@
+body{
+    background-color: rgb(30,30,30,0.5);
+    font-family: 'Google Sans','Noto Sans SC';
+    color: #191919;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.panel{
+    background-color: #303030;
+    width: 100%;
+    max-width: 720px;
+    height: 210px;
+    border-radius: 15px;
+    margin: 20px;
+}
+.panel-bottom{
+    position: fixed;
+    bottom: 0;
+    animation: panel-bottom-animation 0.5s cubic-bezier(0.38, 0, 0.19, 1.03);
+}
+@keyframes panel-bottom-animation{
+    0%{
+        bottom: -220px;
+    }
+    100%{
+        bottom: 0;
+    }
+}
+.panel-top{
+    position: fixed;
+    top: 0;
+    animation: panel-top-animation 0.5s cubic-bezier(0.38, 0, 0.19, 1.03);
+}
+@keyframes panel-top-animation{
+    0%{
+        top: -220px;
+    }
+    100%{
+        top: 0;
+    }
+}
