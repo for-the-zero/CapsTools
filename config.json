@@ -1,5 +1,9 @@
 {
     "collected_tools_id": [],
     "costom_tools": [],
-    "plugin_tools": []
+    "plugin_tools": [],
+    "default_plugin_settings": {},
+    "app_settings": {
+        "panel_place": "bottom"
+    }
 }

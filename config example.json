@@ -17,5 +17,11 @@
             "json_command": ["window_name"],
             "key": "1"
         }
-    ]
+    ],
+    "default_plugin_settings": {
+        
+    },
+    "app_settings": {
+        "panel_place": "bottom"
+    }
 }

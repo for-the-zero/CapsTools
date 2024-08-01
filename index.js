@@ -47,9 +47,10 @@ function create_caps_listener(){
     globalShortcut.register('CapsLock', async()=>{
         caps_status = !caps_status;
         if(caps_status){
-            main_window.webContents.send('reflash', {});
+            main_window.webContents.send('reflash', {config: config});
             main_window.show();
         }else{
+            main_window.webContents.send('hide');
             main_window.hide();
         };
     });
@@ -57,9 +58,10 @@ function create_caps_listener(){
 async function toggle_caps_status(){
     caps_status = !caps_status;
     if(caps_status){
-        main_window.webContents.send('reflash', {});
+        main_window.webContents.send('reflash', {config: config});
         main_window.show();
     }else{
+        main_window.webContents.send('hide');
         main_window.hide();
     };
 };
@@ -88,18 +90,25 @@ function read_config(){
         write_config();
     };
 };
-
 function write_config(config){
     let config_file_path = path.join(app.getAppPath(), 'config.json');
     if(config){
         fs.writeFileSync(config_file_path, JSON.stringify(config), 'utf-8');
     }else{
-        config = {"collected_tools_id": [],"costom_tools": [],"plugin_tools": []};
+        config = {
+            "collected_tools_id": [],
+            "costom_tools": [],
+            "plugin_tools": [],
+            "default_plugin_settings": {},
+            "app_settings": {
+                "panel_place": "bottom"
+            }
+        };
         fs.writeFileSync(config_file_path, JSON.stringify(config), 'utf-8');
     };
 };
-
 read_config();
+
 app.on('ready',()=>{
     create_tray();
     create_main_window();

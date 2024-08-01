@@ -11,14 +11,21 @@ body{
 }
 
 .panel{
+    display: none;
     background-color: #303030;
-    width: 100%;
-    max-width: 720px;
-    height: 210px;
-    border-radius: 15px;
+    width: 65vw;
+    border-radius: 25px;
     margin: 20px;
+    flex-direction: column;
+    padding: 10px;
+}
+@media (max-width: 728px) {
+    .panel{
+        width: calc(100% - 40px)
+    }
 }
 .panel-bottom{
+    display: flex;
     position: fixed;
     bottom: 0;
     animation: panel-bottom-animation 0.5s cubic-bezier(0.38, 0, 0.19, 1.03);
@@ -32,6 +39,7 @@ body{
     }
 }
 .panel-top{
+    display: flex;
     position: fixed;
     top: 0;
     animation: panel-top-animation 0.5s cubic-bezier(0.38, 0, 0.19, 1.03);
@@ -43,4 +51,14 @@ body{
     100%{
         top: 0;
     }
+}
+
+.users-actions, .depl-actions{
+    background-color: #404040;
+    width: 100%;
+    height: 80px;
+    border-radius: 15px;
+}
+.users-actions{
+    margin-bottom: 10px;
 }
