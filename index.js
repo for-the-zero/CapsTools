@@ -38,7 +38,7 @@ function create_main_window(){
     main_window.loadFile('renderer.html');
     main_window.setSkipTaskbar(true);
     main_window.setVisibleOnAllWorkspaces(false);
-    //main_window.webContents.openDevTools();
+    main_window.webContents.openDevTools();//
 };
 
 //Caps Lock Listener
