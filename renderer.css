@@ -56,13 +56,21 @@ body{
 
 .users-actions, .depl-actions{
     background-color: #404040;
-    width: 100%;
     height: 80px;
     border-radius: 15px;
     display: flex;
     flex-direction: row;
-    overflow-x: hidden; /*TODO:*/
+    overflow-x: auto;
     overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    padding: 5px;
+}
+.users-actions::-webkit-scrollbar, .depl-actions::-webkit-scrollbar{
+    display: none;
+}
+.users-actions{
+    margin-bottom: 10px;
 }
 
 .actions-area-description{
@@ -72,4 +80,42 @@ body{
     color: #606060;
     position: absolute;
     transform: translateX(5px);
+}
+
+.actions-btn{
+    color: #E6E6E6;
+    width: 65px;
+    min-width: 65px;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-right: 5px;
+    position: relative;
+}
+.actions-btn:hover{
+    background-color: #606060;
+}
+.actions-btn > p{
+    margin: 0;
+    font-size: 15px;
+    flex: 1;
+}
+.actions-btn > svg{
+    flex: 4;
+}
+.actions-btn > span{
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 114514px;
+    font-size: 11px;
+    background-color: rgba(70,70,70,0.7);
+    padding: 3px;
 }
