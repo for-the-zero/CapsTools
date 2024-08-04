@@ -22,6 +22,7 @@
         
     },
     "app_settings": {
-        "panel_place": "bottom"
+        "panel_place": "bottom",
+        "Chinese": true
     }
 }

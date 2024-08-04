@@ -4,6 +4,7 @@
     "plugin_tools": [],
     "default_plugin_settings": {},
     "app_settings": {
-        "panel_place": "bottom"
+        "panel_place": "bottom",
+        "Chinese": true
     }
 }

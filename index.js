@@ -10,9 +10,9 @@ let tray = null;
 function create_tray() {
     tray = new Tray(nativeImage.createFromPath('src/icon.png'));
     const contextMenu = Menu.buildFromTemplate([
-        { label: '切换大小锁定状态', click: toggle_caps_status },
-        { label: '设置', click: show_settings },
-        { label: '退出', click: app.quit }
+        { label: config.app_settings.Chinese ? '切换大小锁定状态' : 'Toggle Caps Lock Status', click: toggle_caps_status },
+        { label: config.app_settings.Chinese ? '设置' : 'Settings', click: show_settings },
+        { label: config.app_settings.Chinese ? '退出' : 'Exit', click: app.quit }
     ]);
     tray.setToolTip('CapsTools');
     tray.setContextMenu(contextMenu);
@@ -47,22 +47,26 @@ function create_caps_listener(){
     globalShortcut.register('CapsLock', async()=>{
         caps_status = !caps_status;
         if(caps_status){
+            main_window.setFullScreen(true);
             main_window.webContents.send('reflash', {config: config});
             main_window.show();
         }else{
             main_window.webContents.send('hide');
             main_window.hide();
+            main_window.setFullScreen(false);
         };
     });
 };
 async function toggle_caps_status(){
     caps_status = !caps_status;
     if(caps_status){
+        main_window.setFullScreen(true);
         main_window.webContents.send('reflash', {config: config});
         main_window.show();
     }else{
         main_window.webContents.send('hide');
         main_window.hide();
+        main_window.setFullScreen(false);
     };
 };
 
