@@ -18,6 +18,13 @@
             "key": "1"
         }
     ],
+    "default_tools": [
+        "screenshot",
+        "ocr",
+        "translate",
+        "cliprecog",
+        "fileproc"
+    ],
     "default_plugin_settings": {
         
     },

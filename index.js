@@ -4,6 +4,10 @@ const { app, BrowserWindow,
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
+const Screenshots = require('electron-screenshots'); //TODO:
+
+//Init
+const screenshots = new Screenshots();
 
 //Tray
 let tray = null;
@@ -70,9 +74,25 @@ async function toggle_caps_status(){
     };
 };
 
-
-
 function show_settings(){}; //TODO:
+
+ipcMain.on('screenshot',(event)=>{
+    while (caps_status) {
+        if (!caps_status) {
+            break;
+        };
+    };
+    get_screenshot();
+});
+function get_screenshot(){
+    screenshots.startCapture();
+    screenshots.on('ok',(e,buffer,bounds)=>{
+        //TODO:
+    });
+    screenshots.on('cancel',()=>{
+        //TODO:
+    });
+};
 
 
 

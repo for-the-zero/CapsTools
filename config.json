@@ -2,6 +2,13 @@
     "collected_tools_id": [],
     "costom_tools": [],
     "plugin_tools": [],
+    "default_tools": [
+        "screenshot",
+        "ocr",
+        "translate",
+        "cliprecog",
+        "fileproc"
+    ],
     "default_plugin_settings": {},
     "app_settings": {
         "panel_place": "bottom",
