@@ -14,7 +14,6 @@
     "electron": "^31.3.0"
   },
   "dependencies": {
-    "electron-screenshots": "^0.5.26",
     "jquery": "^3.7.1"
   }
 }
