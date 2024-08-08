@@ -1,13 +1,12 @@
 const { app, BrowserWindow,
     Tray, Menu, nativeImage,
-    ipcMain, globalShortcut, desktopCapturer,
+    ipcMain, globalShortcut,
+    dialog
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const Screenshots = require('electron-screenshots'); //TODO:
-
-//Init
-const screenshots = new Screenshots();
+//const process = require('process'); console.log(process.versions);
+const robot = require('robotjs');
 
 //Tray
 let tray = null;
@@ -36,7 +35,8 @@ function create_main_window(){
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
-            contextIsolation: false
+            contextIsolation: false,
+            sandbox: false
         }
     });
     main_window.loadFile('renderer.html');
@@ -77,21 +77,40 @@ async function toggle_caps_status(){
 function show_settings(){}; //TODO:
 
 ipcMain.on('screenshot',(event)=>{
-    while (caps_status) {
+    let wait_interval = setInterval(()=>{
         if (!caps_status) {
-            break;
+            clearInterval(wait_interval);
+            let shot_base64 = get_screenshot();
+            if (config.default_plugin_settings.screenshot_save_path){
+                //TODO:
+            } else {
+                dialog.showSaveDialog({
+                    title: config.app_settings.Chinese ? '保存截图' : 'Save Screenshot',
+                    defaultPath: `screenshot_${Date.now()}.png`,
+                    filters: [
+                        { name: 'PNG', extensions: ['png'] }
+                    ]
+                }, (filePath) => {
+                    if (filePath) {
+                        fs.writeFile(filePath, shot_base64, 'base64', (err) => {
+                            if (err) {
+                                dialog.showErrorBox('Error', err);
+                            } else {
+                                console.log('Screenshot saved successfully');
+                            };
+                        });
+                    };
+                });
+            };
         };
-    };
-    get_screenshot();
+    },100);
 });
+
 function get_screenshot(){
-    screenshots.startCapture();
-    screenshots.on('ok',(e,buffer,bounds)=>{
-        //TODO:
-    });
-    screenshots.on('cancel',()=>{
-        //TODO:
-    });
+    let shot = robot.screen.capture();
+    shot = shot.image; // buffer
+    let base64data = shot.toString('base64');
+    return base64data;
 };
 
 

@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^31.3.0"
+    "electron": "^20.3.12"
   },
   "dependencies": {
-    "jquery": "^3.7.1"
+    "electron-rebuild": "^3.2.9",
+    "jquery": "^3.7.1",
+    "robotjs": "^0.6.0"
   }
 }
