@@ -76,9 +76,16 @@ ipcMain.on('screenshot',(event)=>{
     let wait_interval = setInterval(()=>{
         if (!caps_status) {
             clearInterval(wait_interval);
-            let shot = get_screenshot()['png'];
+            let shot = get_screenshot().buffer;
             if (config.default_plugin_settings.screenshot_save_path){
-                //TODO:
+                let filePath = config.default_plugin_settings.screenshot_save_path;
+                if (!filePath.endsWith(path.sep)){filePath = filePath + path.sep};
+                filePath = filePath + `screenshot_${Date.now()}.png`;
+                fs.writeFile(filePath, shot, (err) => {
+                    if (err) {
+                        dialog.showErrorBox('Error', err.toString());
+                    };
+                });
             } else {
                 dialog.showSaveDialog({
                     title: config.app_settings.Chinese ? '保存截图' : 'Save Screenshot',
@@ -87,19 +94,12 @@ ipcMain.on('screenshot',(event)=>{
                         { name: 'PNG', extensions: ['png'] }
                     ]
                 }).then((res) => {
-                    /*if (res.filePath) {
-                        if (shot) {console.log(shot);} else {console.log('No screenshot data');};
+                    if (res.filePath) {
                         fs.writeFile(res.filePath, shot, (err) => {
                             if (err) {
                                 dialog.showErrorBox('Error', err);
-                            } else {
-                                console.log('Screenshot saved successfully');
                             };
                         });
-                    };*/
-                    if (res.filePath) {
-                        shot.pipe(fs.createWriteStream(res.filePath));
-                        console.log('Screenshot saved successfully');
                     };
                 });
             };
@@ -108,27 +108,18 @@ ipcMain.on('screenshot',(event)=>{
 });
 
 function get_screenshot(){
-    let shot = robot.screen.capture();
-    shot = shot.image; // buffer
-    let base64data = shot.toString('base64');
+    let screenshot = robot.screen.capture();
+    shot = screenshot.image; // buffer
     let size = robot.getScreenSize();
     let pngdata = new PNG({width: size.width, height: size.height});
-    for (let y; y < pngdata.height; y++) {
-        for (let x; x < pngdata.width; x++) {
-            //let idx = (pngdata.width * y + x) * 4;
-            let idx = (pngdata.width * y + x) * 3;
-            let r = shot[idx];
-            let g = shot[idx+1];
-            let b = shot[idx+2];
-            //let a = shot[idx+3];
-            pngdata.data[idx] = b;
-            pngdata.data[idx+1] = g;
-            pngdata.data[idx+2] = r;
-            //pngdata.data[idx+3] = a;
-            pngdata.data[idx+3] = 255;
-        };
+    // 抽象：返回的图片是bgra的
+    for (let i = 0; i < shot.length; i += 4) {
+        [shot[i], shot[i+2]] = [shot[i+2], shot[i]];
     };
-    return {buffer: shot, base64: base64data, png: pngdata.pack()};
+    pngdata.data = Buffer.from(shot);
+    let bufferdata = PNG.sync.write(pngdata);
+    return {origin: shot, buffer: bufferdata};
+    // Claude 3.5 Sonnet 给的，buffer->png->buffer
 };
 
 

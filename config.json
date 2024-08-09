@@ -9,7 +9,9 @@
         "cliprecog",
         "fileproc"
     ],
-    "default_plugin_settings": {},
+    "default_plugin_settings": {
+        "screenshot_save_path": "C:/Users/hao/Desktop"
+    },
     "app_settings": {
         "panel_place": "bottom",
         "Chinese": true
