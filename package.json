@@ -16,6 +16,7 @@
   "dependencies": {
     "electron-rebuild": "^3.2.9",
     "jquery": "^3.7.1",
+    "pngjs": "^7.0.0",
     "robotjs": "^0.6.0"
   }
 }

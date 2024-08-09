@@ -5,8 +5,8 @@ const { app, BrowserWindow,
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
-//const process = require('process'); console.log(process.versions);
 const robot = require('robotjs');
+const { PNG } = require('pngjs');
 
 //Tray
 let tray = null;
@@ -36,7 +36,7 @@ function create_main_window(){
             nodeIntegration: true,
             enableRemoteModule: true,
             contextIsolation: false,
-            sandbox: false
+            //sandbox: false
         }
     });
     main_window.loadFile('renderer.html');
@@ -51,26 +51,22 @@ function create_caps_listener(){
     globalShortcut.register('CapsLock', async()=>{
         caps_status = !caps_status;
         if(caps_status){
-            main_window.setFullScreen(true);
             main_window.webContents.send('reflash', {config: config});
             main_window.show();
         }else{
             main_window.webContents.send('hide');
             main_window.hide();
-            main_window.setFullScreen(false);
         };
     });
 };
 async function toggle_caps_status(){
     caps_status = !caps_status;
     if(caps_status){
-        main_window.setFullScreen(true);
         main_window.webContents.send('reflash', {config: config});
         main_window.show();
     }else{
         main_window.webContents.send('hide');
         main_window.hide();
-        main_window.setFullScreen(false);
     };
 };
 
@@ -80,7 +76,7 @@ ipcMain.on('screenshot',(event)=>{
     let wait_interval = setInterval(()=>{
         if (!caps_status) {
             clearInterval(wait_interval);
-            let shot_base64 = get_screenshot();
+            let shot = get_screenshot()['png'];
             if (config.default_plugin_settings.screenshot_save_path){
                 //TODO:
             } else {
@@ -90,15 +86,20 @@ ipcMain.on('screenshot',(event)=>{
                     filters: [
                         { name: 'PNG', extensions: ['png'] }
                     ]
-                }, (filePath) => {
-                    if (filePath) {
-                        fs.writeFile(filePath, shot_base64, 'base64', (err) => {
+                }).then((res) => {
+                    /*if (res.filePath) {
+                        if (shot) {console.log(shot);} else {console.log('No screenshot data');};
+                        fs.writeFile(res.filePath, shot, (err) => {
                             if (err) {
                                 dialog.showErrorBox('Error', err);
                             } else {
                                 console.log('Screenshot saved successfully');
                             };
                         });
+                    };*/
+                    if (res.filePath) {
+                        shot.pipe(fs.createWriteStream(res.filePath));
+                        console.log('Screenshot saved successfully');
                     };
                 });
             };
@@ -110,7 +111,24 @@ function get_screenshot(){
     let shot = robot.screen.capture();
     shot = shot.image; // buffer
     let base64data = shot.toString('base64');
-    return base64data;
+    let size = robot.getScreenSize();
+    let pngdata = new PNG({width: size.width, height: size.height});
+    for (let y; y < pngdata.height; y++) {
+        for (let x; x < pngdata.width; x++) {
+            //let idx = (pngdata.width * y + x) * 4;
+            let idx = (pngdata.width * y + x) * 3;
+            let r = shot[idx];
+            let g = shot[idx+1];
+            let b = shot[idx+2];
+            //let a = shot[idx+3];
+            pngdata.data[idx] = b;
+            pngdata.data[idx+1] = g;
+            pngdata.data[idx+2] = r;
+            //pngdata.data[idx+3] = a;
+            pngdata.data[idx+3] = 255;
+        };
+    };
+    return {buffer: shot, base64: base64data, png: pngdata.pack()};
 };
 
 
