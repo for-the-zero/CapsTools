@@ -93,7 +93,9 @@ function load_actions(datas){
 function call_screenshot(){
     ipcRenderer.send('screenshot');
 };
-function call_ocr(){}; // TODO:
+function call_ocr(){
+    ipcRenderer.send('ocr');
+};
 function call_translate(){}; // TODO:
 function call_cliprecog(){}; // TODO:
 function call_fileproc(){}; // TODO:

@@ -8,7 +8,7 @@ const path = require('path');
 const robot = require('robotjs');
 const { PNG } = require('pngjs');
 
-//Tray
+// Tray
 let tray = null;
 function create_tray() {
     tray = new Tray(nativeImage.createFromPath('src/icon.png'));
@@ -21,7 +21,7 @@ function create_tray() {
     tray.setContextMenu(contextMenu);
 };
 
-//Main Window
+// Main Window
 let main_window = null;
 function create_main_window(){
     main_window = new BrowserWindow({
@@ -42,10 +42,10 @@ function create_main_window(){
     main_window.loadFile('renderer.html');
     main_window.setSkipTaskbar(true);
     main_window.setVisibleOnAllWorkspaces(false);
-    main_window.webContents.openDevTools();//
+    //main_window.webContents.openDevTools();//
 };
 
-//Caps Lock Listener
+// Caps Lock Listener
 var caps_status = false;
 function create_caps_listener(){
     globalShortcut.register('CapsLock', async()=>{
@@ -70,8 +70,10 @@ async function toggle_caps_status(){
     };
 };
 
+// Settings
 function show_settings(){}; //TODO:
 
+// Screenshot
 ipcMain.on('screenshot',(event)=>{
     let wait_interval = setInterval(()=>{
         if (!caps_status) {
@@ -112,7 +114,7 @@ function get_screenshot(){
     shot = screenshot.image; // buffer
     let size = robot.getScreenSize();
     let pngdata = new PNG({width: size.width, height: size.height});
-    // 抽象：返回的图片是bgra的
+    // robotjs返回的图片是bgra的
     for (let i = 0; i < shot.length; i += 4) {
         [shot[i], shot[i+2]] = [shot[i+2], shot[i]];
     };
@@ -122,12 +124,44 @@ function get_screenshot(){
     // Claude 3.5 Sonnet 给的，buffer->png->buffer
 };
 
+// OCR
+ipcMain.on('ocr',(e)=>{
+    let wait_interval = setInterval(()=>{
+        if (!caps_status) {
+            clearInterval(wait_interval);
+            let screenshot = get_screenshot();
+            let ocr_window = new BrowserWindow({
+                title: 'OCR',
+                show: true,
+                frame: true,
+                autoHideMenuBar: true,
+                //icon: 'src/ocr.png', //TODO:
+                webPreferences: {
+                    nodeIntegration: true,
+                    enableRemoteModule: true,
+                    contextIsolation: false,
+                    //preload: path.join(__dirname, 'default_plugins/ocr/preload.cjs')
+                }
+            });
+            ocr_window.loadFile('default_plugins/ocr/ocr.html');
+            ocr_window.webContents.openDevTools();//
+            ocr_window.webContents.on('did-finish-load', () => {
+                ocr_window.webContents.send('ocr-screenshot', screenshot);
+            });
+        };
+    },100);
+});
 
 
 
 
 
 
+
+
+
+
+// Config
 var config = {};
 function read_config(){
     let config_file_path = path.join(app.getAppPath(), 'config.json');
@@ -161,6 +195,7 @@ function write_config(config){
 };
 read_config();
 
+// App
 app.on('ready',()=>{
     create_tray();
     create_main_window();

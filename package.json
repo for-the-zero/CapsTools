@@ -11,10 +11,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^20.3.12"
+    "electron": "^20.3.12",
+    "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
+    "@paddle-js-models/ocr": "^4.1.1",
     "electron-rebuild": "^3.2.9",
+    "esm": "^3.2.25",
     "jquery": "^3.7.1",
     "pngjs": "^7.0.0",
     "robotjs": "^0.6.0"
