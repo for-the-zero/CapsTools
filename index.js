@@ -140,10 +140,13 @@ ipcMain.on('ocr',(e)=>{
                     nodeIntegration: true,
                     enableRemoteModule: true,
                     contextIsolation: false,
+                    webgl: true,
+                    enableHardwareAcceleration: true,
                     //preload: path.join(__dirname, 'default_plugins/ocr/preload.cjs')
                 }
             });
             ocr_window.loadFile('default_plugins/ocr/ocr.html');
+            //ocr_window.loadURL('https://get.webgl.org/');
             ocr_window.webContents.openDevTools();//
             ocr_window.webContents.on('did-finish-load', () => {
                 ocr_window.webContents.send('ocr-screenshot', screenshot);
