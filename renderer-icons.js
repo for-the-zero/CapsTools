@@ -1,1 +1,0 @@
-import '@mdui/icons/open-in-new--outlined.js';

@@ -125,45 +125,6 @@ function get_screenshot(){
     // Claude 3.5 Sonnet 给的，buffer->png->buffer
 };
 
-// OCR
-ipcMain.on('ocr',(e)=>{
-    let wait_interval = setInterval(()=>{
-        if (!caps_status) {
-            clearInterval(wait_interval);
-            let screenshot = get_screenshot();
-            let ocr_window = new BrowserWindow({
-                title: 'OCR',
-                show: true,
-                frame: true,
-                autoHideMenuBar: true,
-                //icon: 'src/ocr.png', //TODO:
-                webPreferences: {
-                    nodeIntegration: true,
-                    enableRemoteModule: true,
-                    contextIsolation: false,
-                    webgl: true,
-                    enableHardwareAcceleration: true,
-                    //preload: path.join(__dirname, 'default_plugins/ocr/preload.cjs')
-                }
-            });
-            ocr_window.loadFile('default_plugins/ocr/ocr.html');
-            //ocr_window.loadURL('https://get.webgl.org/');
-            ocr_window.webContents.openDevTools();//
-            ocr_window.webContents.on('did-finish-load', async () => {
-                ocr_window.webContents.send('ocr-screenshot', screenshot);
-
-                
-                let worker = await createWorker('chi_sim+eng',{
-                    langPath: 'default_plugins/ocr/tessdata_best',
-                });
-                let res = await worker.recognize(screenshot.buffer);
-                console.log(res);
-                worker.terminate();
-            });
-        };
-    },100);
-});
-
 
 
 

@@ -4,7 +4,6 @@
     "plugin_tools": [],
     "default_tools": [
         "screenshot",
-        "ocr",
         "translate",
         "cliprecog",
         "fileproc"

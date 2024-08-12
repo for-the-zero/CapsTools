@@ -15,12 +15,10 @@
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
-    "@paddle-js-models/ocr": "^4.1.1",
     "electron-rebuild": "^3.2.9",
     "esm": "^3.2.25",
     "jquery": "^3.7.1",
     "pngjs": "^7.0.0",
-    "robotjs": "^0.6.0",
-    "tesseract.js": "^5.1.0"
+    "robotjs": "^0.6.0"
   }
 }
