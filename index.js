@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const robot = require('robotjs');
 const { PNG } = require('pngjs');
+const { createWorker } = require('tesseract.js');
 
 // Tray
 let tray = null;
@@ -148,8 +149,16 @@ ipcMain.on('ocr',(e)=>{
             ocr_window.loadFile('default_plugins/ocr/ocr.html');
             //ocr_window.loadURL('https://get.webgl.org/');
             ocr_window.webContents.openDevTools();//
-            ocr_window.webContents.on('did-finish-load', () => {
+            ocr_window.webContents.on('did-finish-load', async () => {
                 ocr_window.webContents.send('ocr-screenshot', screenshot);
+
+                
+                let worker = await createWorker('chi_sim+eng',{
+                    langPath: 'default_plugins/ocr/tessdata_best',
+                });
+                let res = await worker.recognize(screenshot.buffer);
+                console.log(res);
+                worker.terminate();
             });
         };
     },100);
