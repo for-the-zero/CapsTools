@@ -55,13 +55,6 @@ function load_actions(datas){
             '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="M15 16h4v-4h-1.5v2.5H15zM5 10h1.5V7.5H9V6H5zm3 11v-2H2V3h20v16h-6v2zm-4-4h16V5H4zm0 0V5z"/></svg>'
         );
     };
-    if ((config.default_tools).includes('ocr')){
-        add_actions(ele_dpactions, 
-            'OCR', 
-            call_ocr, 
-            '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="M5 19h14V9.825L14.175 5H5zm-2 2V3h12l6 6v12zm4-4h10v-2H7zm0-4h10v-2H7zm0-4h7V7H7zM5 19V5z"/></svg>'
-        );
-    };
     if ((config.default_tools).includes('translate')){
         add_actions(ele_dpactions, 
             config.app_settings.Chinese ? '翻译' : 'Translate', 
@@ -93,9 +86,8 @@ function load_actions(datas){
 function call_screenshot(){
     ipcRenderer.send('screenshot');
 };
-function call_ocr(){
-    ipcRenderer.send('ocr');
+function call_translate(){
+    ipcRenderer.send('translate',{from:'',to:'',text:''});
 };
-function call_translate(){}; // TODO:
 function call_cliprecog(){}; // TODO:
 function call_fileproc(){}; // TODO:

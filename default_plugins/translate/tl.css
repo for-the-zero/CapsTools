@@ -1,0 +1,30 @@
+body{
+    font-family: 'Google Sans','Noto Sans SC';
+    color: #303030;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+.tabs{
+    height: 100vh;
+}
+.native-tab{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.top-bar{
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+    align-items: center;
+}
+mdui-select{
+    width: 130px;
+}

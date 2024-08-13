@@ -7,7 +7,6 @@ const fs = require('fs');
 const path = require('path');
 const robot = require('robotjs');
 const { PNG } = require('pngjs');
-const { createWorker } = require('tesseract.js');
 
 // Tray
 let tray = null;
@@ -125,6 +124,28 @@ function get_screenshot(){
     // Claude 3.5 Sonnet 给的，buffer->png->buffer
 };
 
+// translate
+ipcMain.on('translate',(event,message)=>{
+    let translate_window = new BrowserWindow({
+        title: config.app_settings.Chinese ? '翻译' : 'Translate',
+        show: false,
+        frame: true,
+        autoHideMenuBar: true,
+        icon: 'src/icon.png', //TODO:
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
+            webviewTag: true
+        }
+    });
+    translate_window.loadFile('default_plugins/translate/tl.html');
+    translate_window.webContents.openDevTools();//TODO:
+    translate_window.webContents.on('did-finish-load', () => {
+        translate_window.show();
+        translate_window.webContents.send('translate', {message: message, config: config});
+    });
+});
 
 
 

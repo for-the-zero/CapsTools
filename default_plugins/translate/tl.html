@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translate</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap">  
+    <link rel="stylesheet" href="../../src/mdui.css">
+    <script>
+        const { Tabs, Tab , TabPanel,
+            Select, MenuItem, Icon, ButtonIcon,
+            Button,
+        } = require('../../src/mdui.cjs');
+    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    
+    
+    <link rel="stylesheet" href="./tl.css">
+</head>
+<body>
+    <mdui-tabs value="native-tab" full-width class="tabs">
+        <mdui-tab value="native-tab" data-entext="Input">输入</mdui-tab>
+        <mdui-tab value="Google">Google</mdui-tab>
+        <mdui-tab value="GMirror">Google Mirror</mdui-tab>
+        <mdui-tab value="Deepl">Deepl</mdui-tab>
+        <mdui-tab value="Bing">Bing</mdui-tab>
+        <mdui-tab value="tx" data-entext="Transmart">腾讯</mdui-tab>
+        <mdui-tab value="Baidu" data-entext="Baidu">百度</mdui-tab>
+      
+        <mdui-tab-panel slot="panel" value="native-tab" class="native-tab">
+            <div class="top-bar">
+                <mdui-button-icon icon="delete--outlined" style="user-select: none;margin-left: 7px;"></mdui-button-icon>
+                <mdui-select class="source-lang" variant="outlined" value="zh">
+                    <mdui-menu-item value="zh" data-entext="Chinese">中文</mdui-menu-item>
+                    <mdui-menu-item value="en" data-entext="English">英文</mdui-menu-item>
+                    <mdui-menu-item value="ja" data-entext="Japanese">日文</mdui-menu-item>
+                    <mdui-menu-item value="ko" data-entext="Korean">韩文</mdui-menu-item>
+                    <mdui-menu-item value="fr" data-entext="French">法文</mdui-menu-item>
+                    <mdui-menu-item value="es" data-entext="Spanish">西班牙文</mdui-menu-item>
+                    <mdui-menu-item value="ru" data-entext="Russian">俄文</mdui-menu-item>
+                </mdui-select>
+                <mdui-icon name="arrow_forward" style="user-select: none; margin-left: 7px; margin-right: 7px;"></mdui-icon>
+                <mdui-select class="target-lang" variant="outlined" value="en">
+                    <mdui-menu-item value="zh" data-entext="Chinese">中文</mdui-menu-item>
+                    <mdui-menu-item value="en" data-entext="English">英文</mdui-menu-item>
+                    <mdui-menu-item value="ja" data-entext="Japanese">日文</mdui-menu-item>
+                    <mdui-menu-item value="ko" data-entext="Korean">韩文</mdui-menu-item>
+                    <mdui-menu-item value="fr" data-entext="French">法文</mdui-menu-item>
+                    <mdui-menu-item value="es" data-entext="Spanish">西班牙文</mdui-menu-item>
+                    <mdui-menu-item value="ru" data-entext="Russian">俄文</mdui-menu-item>
+                </mdui-select>
+                <div style="flex-grow: 1;"></div>
+                <mdui-button variant="elevated" data-entext="Sync to Webpage">同步至网页</mdui-button>
+            </div>
+            <div class="translate-area">
+                <mdui-text-field autosize label="Text" variant="outlined"></mdui-text-field>
+            </div>
+        </mdui-tab-panel>
+
+
+        <mdui-tab-panel slot="panel" value="Google">
+            <webview class="google-webview" src="" style="width: 100%; height: 100%;"></webview>
+        </mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="GMirror">
+            <webview class="gmirror-webview" src="" style="width: 100%; height: 100%;"></webview>
+        </mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="Deepl">
+            <webview class="deepl-webview" src="" style="width: 100%; height: 100%;"></webvi>
+        </mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="Bing">
+            <webview class="bing-webview" src="" style="width: 100%; height: 100%;"></webview>
+        </mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="tx">
+            <webview class="tx-webview" src="" style="width: 100%; height: 100%;"></webview>
+        </mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="Baidu">
+            <webview class="baidu-webview" src="" style="width: 100%; height: 100%;"></webview>
+        </mdui-tab-panel>
+    </mdui-tabs>
+
+    <script src="./tl.js"></script>
+</body>
+</html>

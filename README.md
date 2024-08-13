@@ -1,5 +1,7 @@
 # CapsTools
 
+# 未完成 / Under construction
+
 一个利用大写锁定键（Caps Lock）触发的工具箱
 
 ---
