@@ -14,7 +14,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
 }
 .top-bar{
     padding-left: 20px;
@@ -27,4 +27,7 @@ body{
 }
 mdui-select{
     width: 130px;
+}
+.translate-input{
+    width: 90%;
 }

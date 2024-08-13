@@ -31,7 +31,8 @@
       
         <mdui-tab-panel slot="panel" value="native-tab" class="native-tab">
             <div class="top-bar">
-                <mdui-button-icon icon="delete--outlined" style="user-select: none;margin-left: 7px;"></mdui-button-icon>
+                <!--TODO:-->
+                <mdui-button-icon icon="delete--outlined" style="user-select: none;margin-left: 7px;" onclick="ele_tlinput.val('');"></mdui-button-icon>
                 <mdui-select class="source-lang" variant="outlined" value="zh">
                     <mdui-menu-item value="zh" data-entext="Chinese">中文</mdui-menu-item>
                     <mdui-menu-item value="en" data-entext="English">英文</mdui-menu-item>
@@ -52,11 +53,9 @@
                     <mdui-menu-item value="ru" data-entext="Russian">俄文</mdui-menu-item>
                 </mdui-select>
                 <div style="flex-grow: 1;"></div>
-                <mdui-button variant="elevated" data-entext="Sync to Webpage">同步至网页</mdui-button>
+                <mdui-button class="sync-btn" variant="elevated" data-entext="Sync to Webpage">同步至网页</mdui-button>
             </div>
-            <div class="translate-area">
-                <mdui-text-field autosize label="Text" variant="outlined"></mdui-text-field>
-            </div>
+            <mdui-text-field class="translate-input" autosize label="Text" variant="outlined"></mdui-text-field>
         </mdui-tab-panel>
 
 
