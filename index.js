@@ -1,7 +1,7 @@
 const { app, BrowserWindow,
     Tray, Menu, nativeImage,
     ipcMain, globalShortcut,
-    dialog
+    dialog, clipboard,
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
@@ -140,13 +140,128 @@ ipcMain.on('translate',(event,message)=>{
         }
     });
     translate_window.loadFile('default_plugins/translate/tl.html');
-    translate_window.webContents.openDevTools();//TODO:
+    //translate_window.webContents.openDevTools();
     translate_window.webContents.on('did-finish-load', () => {
         translate_window.show();
         translate_window.webContents.send('translate', {message: message, config: config});
     });
 });
 
+// cliprecog & clipboard
+var clip_history = [];
+function is_obj_equal(obj1, obj2){
+    if(obj1.text === obj2.text && obj1.html === obj2.html){
+        if (obj1.image === null && obj2.image === null){
+            return true;
+        } else if (obj1.image.toDataURL() === obj2.image.toDataURL()){
+            return true;
+        };
+        return false;
+    }else{
+        return false;
+    };
+};
+var add_clip_interval = setInterval(()=>{
+    if ('default_tools' in config){
+        clearInterval(add_clip_interval);
+        if (config.default_tools.includes('cliprecog')) {
+            setInterval(()=>{
+                let now_clip = {text: null, html: null, image: null};
+                now_clip.text = clipboard.readText();
+                now_clip.html = clipboard.readHTML();
+                let now_clip_img = clipboard.readImage();
+                if (!now_clip_img.isEmpty()){
+                    now_clip.image = now_clip_img;
+                };
+                if (clip_history.length === 0){
+                    clip_history.push(now_clip);
+                } else if (! is_obj_equal(now_clip, clip_history[0])){
+                    for (let i = 0; i < clip_history.length; i++){
+                        if (is_obj_equal(now_clip, clip_history[i])){
+                            clip_history.splice(i, 1);
+                            break;
+                        };
+                    };
+                    clip_history.unshift(now_clip);
+                    //console.log(clip_history);
+                };
+            },1000);
+        };
+    } else {
+        clearInterval(add_clip_interval);
+    };
+}, 100);
+ipcMain.on('cliprecog',(event)=>{
+    let clip_window = new BrowserWindow({
+        title: config.app_settings.Chinese ? '剪贴板' : 'Clipboard',
+        show: false,
+        frame: true,
+        autoHideMenuBar: true,
+        fullscreenable: false,
+        maximizable: false,
+        icon: 'src/icon.png', //TODO:
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
+        },
+        width: 290,
+        height: 580,
+        x: 100,
+        y: 100,
+    });
+    clip_window.loadFile('default_plugins/clip/clip.html');
+    clip_window.webContents.openDevTools();//
+    clip_window.webContents.on('did-finish-load', () => {
+        clip_window.show();
+        clip_window.webContents.send('open_clip', {clip_history: clip_history, config: config});
+    });
+});
+ipcMain.handle('get_clip',async(e)=>{
+    return clip_history;
+});
+ipcMain.on('changed_clip', (e,new_history) => {
+    clip_history = new_history;
+});
+ipcMain.on('save_text',(event,obj)=>{
+    dialog.showSaveDialog({
+        title: config.app_settings.Chinese ? '保存文本' : 'Save Text',
+        defaultPath: `text_${Date.now()}.txt`,
+        filters: [
+            { name: 'Text', extensions: ['txt'] },
+            { name: 'HTML', extensions: ['html'] },
+        ]
+    }).then((res)=>{
+        if(res.filePath){
+            if(path.extname(res.filePath) === '.txt'){
+                fs.writeFile(res.filePath, obj.text, 'utf-8', (err)=>{console.error(err)});
+            } else if(path.extname(res.filePath) === '.html'){
+                fs.writeFile(res.filePath, obj.html, 'utf-8', (err)=>{console.error(err)});
+            };
+        }
+    });
+});
+ipcMain.on('translate_text',(event,text)=>{
+    let translate_window = new BrowserWindow({title: config.app_settings.Chinese ? '翻译' : 'Translate',show: false,frame: true,autoHideMenuBar: true,icon: 'src/icon.png'/*TODO:*/, webPreferences: {nodeIntegration: true,enableRemoteModule: true,contextIsolation: false,webviewTag: true}});translate_window.loadFile('default_plugins/translate/tl.html');translate_window.webContents.on('did-finish-load', () => {translate_window.show();
+    translate_window.webContents.send('translate', {message: {from: 'cn', to: 'en', text: text}, config: config});});
+});
+ipcMain.on('save_image',(e,nimg)=>{
+    dialog.showSaveDialog({
+        title: config.app_settings.Chinese ? '保存图片' : 'Save Image',
+        defaultPath: `image_${Date.now()}.png`,
+        filters: [
+            { name: 'PNG', extensions: ['png'] }
+        ]
+    }).then((res)=>{
+        if(res.filePath){
+            let img_data = nimg.toPNG();
+            fs.writeFile(res.filePath, img_data, (err)=>{console.error(err)});
+        }
+    });
+});
+
+// fileproc
+ipcMain.on('fileproc',(event)=>{}); //TODO:
 
 
 

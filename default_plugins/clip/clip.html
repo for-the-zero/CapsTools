@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap">  
+    <link rel="stylesheet" href="../../src/mdui.css">
+    <script>
+        const { Tab, Tabs, TabPanel, Card, ButtonIcon,
+            Dialog, Menu, MenuItem, 
+        } = require('../../src/mdui.cjs');
+    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <link rel="stylesheet" href="./clip.css">
+</head>
+<body>
+    <mdui-tabs value="clip" full-width>
+        <mdui-tab value="clip" data-entext="Clipboard">剪贴板</mdui-tab>
+        <mdui-tab value="quick" data-entext="Quick Input">快速输入</mdui-tab>
+
+        <mdui-tab-panel value="clip" slot="panel">
+            <div class="clip-area">
+                <div class="clip-actions">
+                    <mdui-button-icon icon="sync" class="sync-history"></mdui-button-icon>
+                    <mdui-button-icon icon="clear_all" class="clear-history"></mdui-button-icon>
+                </div>
+                <div class="clip-list">
+                    <!--
+                    <mdui-card class="clip-item" variant="outlined" clickable>
+                        <span>Text</span>
+                    </mdui-card>
+                    <mdui-card class="clip-item" variant="outlined" clickable>
+                        <span>Text</span>
+                    </mdui-card>
+                    -->
+                </div>
+            </div>
+
+            <mdui-dialog class="text-actions" close-on-esc close-on-overlay-click>
+                <mdui-menu>
+                    <mdui-menu-item class="text-show" data-entext="show">查看</mdui-menu-item>
+                    <mdui-menu-item class="text-save" data-entext="save as txt/html">保存为txt/html</mdui-menu-item>
+                    <mdui-menu-item class="text-translate" data-entext="translate">翻译</mdui-menu-item>
+                    <mdui-menu-item class="text-delete" data-entext="delete">删除</mdui-menu-item>
+                </mdui-menu>
+            </mdui-dialog>
+            <mdui-dialog class="img-actions" close-on-esc close-on-overlay-click>
+                <mdui-menu>
+                    <mdui-menu-item class="img-save" data-entext="save as png">保存png</mdui-menu-item>
+                    <mdui-menu-item class="img-delete" data-entext="delete">删除</mdui-menu-item>
+                </mdui-menu>
+            </mdui-dialog>
+            <mdui-dialog class="show-text" close-on-esc close-on-overlay-click></mdui-dialog>
+        </mdui-tab-panel>
+
+        <mdui-tab-panel value="quick" slot="panel">
+            <!-- TODO: -->
+        </mdui-tab-panel>
+    </mdui-tabs>
+    
+
+
+
+    <script src="./clip.js"></script>
+</body>
+</html>

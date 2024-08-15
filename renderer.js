@@ -89,5 +89,9 @@ function call_screenshot(){
 function call_translate(){
     ipcRenderer.send('translate',{from:'',to:'',text:''});
 };
-function call_cliprecog(){}; // TODO:
-function call_fileproc(){}; // TODO:
+function call_cliprecog(){
+    ipcRenderer.send('cliprecog');
+};
+function call_fileproc(){
+    ipcRenderer.send('fileproc');
+};
