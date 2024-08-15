@@ -16,6 +16,7 @@ const ele_tdelete = $('.text-delete');
 const ele_isave = $('.img-save');
 const ele_idelete = $('.img-delete');
 const ele_showtext = $('.show-text');
+const ele_quickarea = $('.quick-area');
 
 
 var clip_history = [];
@@ -32,6 +33,16 @@ ipcRenderer.on('open_clip', (e, data) => {
     if (clip_history.length > 0){
         reflash_clip_list(clip_history);
     };
+    if (config.default_plugin_settings.clip_quickinput.length > 0){
+        for (let i = 0; i < config.default_plugin_settings.clip_quickinput.length; i++){
+            let html = `<mdui-chip>${config.default_plugin_settings.clip_quickinput[i]}</mdui-chip>`
+            let ele_to_add = $(html);
+            ele_to_add.on('click',function(){
+                clipboard.writeText(config.default_plugin_settings.clip_quickinput[i]);
+            });
+            ele_quickarea.append(ele_to_add);
+        };
+    }
 });
 
 ele_syncbtn.on('click', async () => {

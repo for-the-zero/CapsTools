@@ -25,8 +25,13 @@
         "fileproc"
     ],
     "default_plugin_settings": {
-        "screenshot_save_path": "path/to/save/screenshot/or/no/such/item",
-        "google_translate_mirror": "https://translate.yunkuerp.cn/"
+        "screenshot_save_path": "path/to/sateve/screenshot/or/no/such/item",
+        "google_translate_mirror": "https://translate.yunkuerp.cn/",
+        "clip_quickinput": [
+            "text",
+            "example",
+            "½"
+        ]
     },
     "app_settings": {
         "panel_place": "bottom",

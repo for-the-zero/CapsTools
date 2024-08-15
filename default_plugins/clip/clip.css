@@ -65,3 +65,13 @@ mdui-tabs{
     cursor: text;
     white-space: pre-wrap;
 }
+.quick-area{
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    gap: 5px;
+}
+.quick-area::-webkit-scrollbar{
+    display: none;
+}

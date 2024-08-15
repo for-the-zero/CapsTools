@@ -10,7 +10,8 @@
     ],
     "default_plugin_settings": {
         "screenshot_save_path": "C:/Users/hao/Desktop",
-        "google_translate_mirror": "https://translate.yunkuerp.cn/"
+        "google_translate_mirror": "https://translate.yunkuerp.cn/",
+        "clip_quickinput": []
     },
     "app_settings": {
         "panel_place": "bottom",
