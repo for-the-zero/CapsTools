@@ -42,7 +42,7 @@ function create_main_window(){
     main_window.loadFile('renderer.html');
     main_window.setSkipTaskbar(true);
     main_window.setVisibleOnAllWorkspaces(false);
-    //main_window.webContents.openDevTools();//
+    main_window.webContents.openDevTools();//
 };
 
 // Caps Lock Listener
@@ -131,7 +131,7 @@ ipcMain.on('translate',(event,message)=>{
         show: false,
         frame: true,
         autoHideMenuBar: true,
-        icon: 'src/icon.png', //TODO:
+        icon: 'src/icon.png',
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -199,7 +199,7 @@ ipcMain.on('cliprecog',(event)=>{
         autoHideMenuBar: true,
         fullscreenable: false,
         maximizable: false,
-        icon: 'src/icon.png', //TODO:
+        icon: 'src/icon.png',
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -242,7 +242,7 @@ ipcMain.on('save_text',(event,obj)=>{
     });
 });
 ipcMain.on('translate_text',(event,text)=>{
-    let translate_window = new BrowserWindow({title: config.app_settings.Chinese ? '翻译' : 'Translate',show: false,frame: true,autoHideMenuBar: true,icon: 'src/icon.png'/*TODO:*/, webPreferences: {nodeIntegration: true,enableRemoteModule: true,contextIsolation: false,webviewTag: true}});translate_window.loadFile('default_plugins/translate/tl.html');translate_window.webContents.on('did-finish-load', () => {translate_window.show();
+    let translate_window = new BrowserWindow({title: config.app_settings.Chinese ? '翻译' : 'Translate',show: false,frame: true,autoHideMenuBar: true,icon: 'src/icon.png', webPreferences: {nodeIntegration: true,enableRemoteModule: true,contextIsolation: false,webviewTag: true}});translate_window.loadFile('default_plugins/translate/tl.html');translate_window.webContents.on('did-finish-load', () => {translate_window.show();
     translate_window.webContents.send('translate', {message: {from: 'cn', to: 'en', text: text}, config: config});});
 });
 ipcMain.on('save_image',(e,nimg)=>{
@@ -259,9 +259,15 @@ ipcMain.on('save_image',(e,nimg)=>{
         }
     });
 });
-
-// fileproc
-ipcMain.on('fileproc',(event)=>{}); //TODO:
+function check_file_ability(file_path){
+    //TODO:
+};
+ipcMain.on('check_svg',(e,svg_path)=>{
+    //TODO:
+});
+ipcMain.on('open_img',(e,img_path)=>{
+    //TODO:
+});
 
 
 

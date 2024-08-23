@@ -44,7 +44,71 @@ function load_actions(datas){
     let config = datas.config;
     ele_uactions.children('div').remove();
     ele_dpactions.children('div').remove();
-    // TODO: all about config
+    
+    // costom tools
+    if (config.custom_tools.length > 0){
+        for (let i = 0; i < config.custom_tools.length; i++){
+            let tool = config.custom_tools[i];
+            if (tool.type == 'cmd'){
+                let show_this_tool = false;
+                try{
+                    if(eval(tool.if)){
+                        show_this_tool = true;
+                    } else {
+                        show_this_tool = false;
+                    };
+                } catch (e) {
+                    console.log(e);
+                    show_this_tool = false;
+                };
+                if (show_this_tool){
+                    let tool_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="M3 21V3h9v2H5v14h14v-7h2v9zm6.7-5.3l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4z"/></svg>';
+                    try {
+                        if(tool.icon.startsWith('https')){
+                            if(tool.icon.endsWith('.svg')){
+                                $.ajax({
+                                    url: tool.icon,
+                                    type: 'GET',
+                                    success: function(data, status, xhr){
+                                        if(xhr.status == 200 && xhr.getResponseHeader('Content-Type').includes('image/svg+xml')){
+                                            tool_icon = data;
+                                        };
+                                    }
+                                });
+                            } else if(tool.icon.endsWith('.png') || tool.icon.endsWith('.ico')){
+                                $.ajax({
+                                    url: tool.icon,
+                                    type: 'GET',
+                                    success: function(data, status, xhr){
+                                        if(xhr.status == 200 && xhr.getResponseHeader('Content-Type').includes('image/svg+xml')){
+                                            tool_icon = `<img src="${tool.icon}" />`;
+                                        };
+                                    }
+                                });
+                            };
+                        } else if(tool.icon.startsWith('<svg')){
+                            tool_icon = tool.icon;
+                        } else if(tool.icon.startsWith('file://')){
+                            if(tool.icon.endsWith('.svg')){
+                                ipcRenderer.invoke('check_svg',tool.icon).then((data)=>{
+                                    //TODO:
+                                });
+                            } else if(tool.icon.endsWith('.png') || tool.icon.endsWith('.ico')){
+                                ipcRenderer.invoke('check_img',tool.icon).then((data)=>{
+                                    //TODO:
+                                });
+                            };
+                        };
+                    }catch(e){
+                        console.log(e);
+                    }
+                };
+            };
+        };
+    };
+
+
+
 
 
     // default actions
@@ -69,13 +133,6 @@ function load_actions(datas){
             '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="m21.6 23l-2.7-2.7q-.55.325-1.15.513T16.5 21q-1.875 0-3.187-1.312T12 16.5t1.313-3.187T16.5 12t3.188 1.313T21 16.5q0 .65-.187 1.25T20.3 18.9l2.7 2.7zm-5.1-4q1.05 0 1.775-.725T19 16.5t-.725-1.775T16.5 14t-1.775.725T14 16.5t.725 1.775T16.5 19m4.5-9h-2V5h-2v3H7V5H5v14h5v2H3V3h6.175q.275-.875 1.075-1.437T12 1q1 0 1.788.563T14.85 3H21zm-9-5q.425 0 .713-.288T13 4t-.288-.712T12 3t-.712.288T11 4t.288.713T12 5"/></svg>'
         );
     };
-    if ((config.default_tools).includes('fileproc')){
-        add_actions(ele_dpactions,        
-            config.app_settings.Chinese ? '文件处理' : 'FileProc',
-            call_fileproc,
-            '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="M4 22V2h10l6 6v6h-2V9h-5V4H6v16h9v2zm17.95.375L19 19.425v2.225h-2V16h5.65v2H20.4l2.95 2.95zM6 20V4z"/></svg>'
-        );
-    };
 };
 
 
@@ -91,7 +148,4 @@ function call_translate(){
 };
 function call_cliprecog(){
     ipcRenderer.send('cliprecog');
-};
-function call_fileproc(){
-    ipcRenderer.send('fileproc');
 };

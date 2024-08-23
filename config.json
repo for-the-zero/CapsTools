@@ -1,12 +1,25 @@
 {
     "collected_tools_id": [],
-    "costom_tools": [],
+    "custom_tools": [
+        {
+            "id": "example_tool",
+            "type": "cmd",
+            "if": "(()=>{console.log('test'),return true})();",
+            "command": "calc",
+            "icon": "path/to/icon.svg"
+        },
+        {
+            "id": "example_pwa",
+            "type": "pwa",
+            "url": "https://example.com",
+            "icon": "path/to/icon.svg"
+        }
+    ],
     "plugin_tools": [],
     "default_tools": [
         "screenshot",
         "translate",
-        "cliprecog",
-        "fileproc"
+        "cliprecog"
     ],
     "default_plugin_settings": {
         "screenshot_save_path": "C:/Users/hao/Desktop",

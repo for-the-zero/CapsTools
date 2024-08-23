@@ -84,6 +84,7 @@ body{
 
 .actions-btn{
     color: #E6E6E6;
+    background-color: #404040;
     width: 65px;
     border-radius: 10px;
     padding: 5px;
@@ -109,7 +110,13 @@ body{
 }
 .actions-btn > svg{
     flex: 4;
+    height: 52px;
 }
+.actions-btn > img{
+    flex: 4;
+    height: 52px;
+}
+/*  砍了，不要了
 .actions-btn > span{
     position: absolute;
     display: block;
@@ -121,3 +128,4 @@ body{
     background-color: rgba(70,70,70,0.7);
     padding: 3px;
 }
+*/

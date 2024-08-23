@@ -2,27 +2,31 @@
     "collected_tools_id": [
         "example_tool"
     ],
-    "costom_tools": [
+    "custom_tools": [
         {
             "id": "example_tool",
+            "type": "cmd",
             "if": "//JS conditions code",
             "command": "cmd command here",
-            "key": "键盘上的按键，只要不是CapsLock之类的应该都行，可省略该键值"
+            "icon": "path/to/icon.svg"
+        },
+        {
+            "id": "example_pwa",
+            "type": "pwa",
+            "url": "https://example.com",
+            "icon": "path/to/icon.svg"
         }
     ],
     "plugin_tools": [
         {
             "id": "example_plugin",
-            "path": "plugin_folder/plugin.py",
-            "json_command": ["window_name"],
-            "key": "1"
+            "path": "plugin_folder/plugin.js"
         }
     ],
     "default_tools": [
         "screenshot",
         "translate",
-        "cliprecog",
-        "fileproc"
+        "cliprecog"
     ],
     "default_plugin_settings": {
         "screenshot_save_path": "path/to/sateve/screenshot/or/no/such/item",
