@@ -4,13 +4,15 @@
         {
             "id": "example_tool",
             "type": "cmd",
-            "if": "(()=>{console.log('test'),return true})();",
+            "name": "Example Tool",
+            "if": "(function(){console.log('if');return true;})();",
             "command": "calc",
-            "icon": "path/to/icon.svg"
+            "icon": "https://s96-ious.freeconvert.com/task/66c9a90f60c19ee04d098018/7zip.svg"
         },
         {
             "id": "example_pwa",
             "type": "pwa",
+            "name": "Example PWA",
             "url": "https://example.com",
             "icon": "path/to/icon.svg"
         }

@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const robot = require('robotjs');
 const { PNG } = require('pngjs');
+const { exec } = require('child_process');
 
 // Tray
 let tray = null;
@@ -259,14 +260,44 @@ ipcMain.on('save_image',(e,nimg)=>{
         }
     });
 });
+
+
+
 function check_file_ability(file_path){
-    //TODO:
+    try{
+        fs.accessSync(file_path, fs.constants.R_OK);
+        return true;
+    } catch (error) {
+        return false;
+    };
 };
-ipcMain.on('check_svg',(e,svg_path)=>{
-    //TODO:
+ipcMain.handle('check_svg',(e,svg_path)=>{
+    if(check_file_ability(svg_path)){
+        let content = fs.readFileSync(svg_path, 'utf-8');
+        if(content.startsWith('<svg')){
+            return [true,content];
+        } else {
+            return false;
+        };
+    } else {
+        return false;
+    };
 });
-ipcMain.on('open_img',(e,img_path)=>{
-    //TODO:
+ipcMain.handle('check_img',(e,img_path)=>{
+    if(check_file_ability(img_path)){
+        return true;
+    } else {
+        return false;
+    };
+});
+ipcMain.on('run_cmd',(e,cmd_str)=>{
+    exec(cmd_str, (error, stdout, stderr) => {
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+        if (error) {
+            console.error(`exec error: ${error}`);
+        };
+    });
 });
 
 

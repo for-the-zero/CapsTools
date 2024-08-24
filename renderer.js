@@ -35,12 +35,12 @@ natele_dpactions.addEventListener('wheel',(e)=>{
     natele_dpactions.scrollLeft += e.deltaY;
 });
 
-function add_actions(ele, text, action, svg){
-    let ele_to_add = $(`<div class="actions-btn">${svg}<p>${text}</p></div>`);
+function add_actions(ele, text, action, icon){
+    let ele_to_add = $(`<div class="actions-btn">${icon}<p>${text}</p></div>`);
     ele_to_add.on('click',action);
     ele.append(ele_to_add);
 };
-function load_actions(datas){
+async function load_actions(datas){
     let config = datas.config;
     ele_uactions.children('div').remove();
     ele_dpactions.children('div').remove();
@@ -62,6 +62,7 @@ function load_actions(datas){
                     show_this_tool = false;
                 };
                 if (show_this_tool){
+                    // icon
                     let tool_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="M3 21V3h9v2H5v14h14v-7h2v9zm6.7-5.3l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4z"/></svg>';
                     try {
                         if(tool.icon.startsWith('https')){
@@ -69,8 +70,9 @@ function load_actions(datas){
                                 $.ajax({
                                     url: tool.icon,
                                     type: 'GET',
+                                    async: false,
                                     success: function(data, status, xhr){
-                                        if(xhr.status == 200 && xhr.getResponseHeader('Content-Type').includes('image/svg+xml')){
+                                        if(xhr.status == 200 && (xhr.getResponseHeader('Content-Type').includes('image/svg+xml') || xhr.getResponseHeader('Content-Type').includes('application/octet-stream'))){
                                             tool_icon = data;
                                         };
                                     }
@@ -79,8 +81,9 @@ function load_actions(datas){
                                 $.ajax({
                                     url: tool.icon,
                                     type: 'GET',
+                                    async: false,
                                     success: function(data, status, xhr){
-                                        if(xhr.status == 200 && xhr.getResponseHeader('Content-Type').includes('image/svg+xml')){
+                                        if(xhr.status == 200 && (xhr.getResponseHeader('Content-Type').includes('image/png') || xhr.getResponseHeader('Content-Type').includes('image/x-icon') || xhr.getResponseHeader('Content-Type').includes('application/octet-stream'))){
                                             tool_icon = `<img src="${tool.icon}" />`;
                                         };
                                     }
@@ -90,19 +93,27 @@ function load_actions(datas){
                             tool_icon = tool.icon;
                         } else if(tool.icon.startsWith('file://')){
                             if(tool.icon.endsWith('.svg')){
-                                ipcRenderer.invoke('check_svg',tool.icon).then((data)=>{
-                                    //TODO:
-                                });
+                                let res = await ipcRenderer.invoke('check_svg',tool.icon.replace('file://',''));
+                                if(res[0]){
+                                    tool_icon = res[1];
+                                };
                             } else if(tool.icon.endsWith('.png') || tool.icon.endsWith('.ico')){
-                                ipcRenderer.invoke('check_img',tool.icon).then((data)=>{
-                                    //TODO:
-                                });
+                                let res = await ipcRenderer.invoke('check_img',tool.icon.replace('file://',''));
+                                if(res){
+                                    tool_icon = `<img src="${tool.icon}" />`;
+                                };
                             };
                         };
                     }catch(e){
                         console.log(e);
-                    }
+                    };
+                    // add actions
+                    add_actions(ele_uactions, tool.name, ()=>{
+                        ipcRenderer.send('run_cmd',tool.command);
+                    }, tool_icon);
                 };
+            } else {
+                // TODO:
             };
         };
     };

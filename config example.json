@@ -6,6 +6,7 @@
         {
             "id": "example_tool",
             "type": "cmd",
+            "name": "Example Tool",
             "if": "//JS conditions code",
             "command": "cmd command here",
             "icon": "path/to/icon.svg"
@@ -13,6 +14,7 @@
         {
             "id": "example_pwa",
             "type": "pwa",
+            "name": "Example PWA",
             "url": "https://example.com",
             "icon": "path/to/icon.svg"
         }
