@@ -1,10 +1,6 @@
 {
-    "collected_tools_id": [
-        "example_tool"
-    ],
     "custom_tools": [
         {
-            "id": "example_tool",
             "type": "cmd",
             "name": "Example Tool",
             "if": "//JS conditions code",
@@ -12,7 +8,6 @@
             "icon": "path/to/icon.svg"
         },
         {
-            "id": "example_pwa",
             "type": "pwa",
             "name": "Example PWA",
             "url": "https://example.com",
@@ -20,10 +15,7 @@
         }
     ],
     "plugin_tools": [
-        {
-            "id": "example_plugin",
-            "path": "plugin_folder/plugin.js"
-        }
+        "plugin_folder/plugin.js"
     ],
     "default_tools": [
         "screenshot",

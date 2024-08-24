@@ -2,6 +2,7 @@ const { app, BrowserWindow,
     Tray, Menu, nativeImage,
     ipcMain, globalShortcut,
     dialog, clipboard,
+    shell, 
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
@@ -43,7 +44,7 @@ function create_main_window(){
     main_window.loadFile('renderer.html');
     main_window.setSkipTaskbar(true);
     main_window.setVisibleOnAllWorkspaces(false);
-    main_window.webContents.openDevTools();//
+    //main_window.webContents.openDevTools();//
 };
 
 // Caps Lock Listener
@@ -299,13 +300,47 @@ ipcMain.on('run_cmd',(e,cmd_str)=>{
         };
     });
 });
+ipcMain.on('open_pwa',(e,url)=>{
+    open_pwa(url);
+});
+function open_pwa(url){
+    let pwa_window = new BrowserWindow({
+        autoHideMenuBar: true,
+        show: true,
+    });
+    pwa_window.loadURL(url);
+    pwa_window.webContents.setWindowOpenHandler((details)=>{
+        if (details.url){
+            open_pwa(details.url);
+        };
+        return {action: 'deny'};
+    });
+    Menu.setApplicationMenu(Menu.buildFromTemplate([
+        { label: config.app_settings.Chinese ? '操作' : 'Actions', submenu: [
+            { label: config.app_settings.Chinese ? '刷新' : 'Refresh', click: (item,focusedWindow) => { focusedWindow.reload(); } },
+            { label: config.app_settings.Chinese ? '浏览器打开' : 'Open in Browser', click: (item,focusedWindow) => { shell.openExternal(focusedWindow.getURL()); } },
+            { label: config.app_settings.Chinese ? '关闭' : 'Close', click: (item,focusedWindow) => { focusedWindow.close(); } }
+        ] }
+    ]));
+};
 
 
 
 
 
 
-
+// no repeat
+const sil = app.requestSingleInstanceLock();
+if (!sil) {
+    app.quit();
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        if (main_window) {
+            if (main_window.isMinimized()) main_window.restore();
+            main_window.focus();
+        }
+    });
+};
 
 // Config
 var config = {};
@@ -346,6 +381,11 @@ app.on('ready',()=>{
     create_tray();
     create_main_window();
     create_caps_listener();
+
+    if(process.argv.includes('--pwa')){
+        let pwa_url = process.argv[process.argv.indexOf('--pwa')+1];
+        open_pwa(pwa_url);
+    };
 });
 app.on('will-quit',()=>{
     globalShortcut.unregisterAll();

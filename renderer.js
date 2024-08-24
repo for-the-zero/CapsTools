@@ -77,13 +77,13 @@ async function load_actions(datas){
                                         };
                                     }
                                 });
-                            } else if(tool.icon.endsWith('.png') || tool.icon.endsWith('.ico')){
+                            } else {
                                 $.ajax({
                                     url: tool.icon,
                                     type: 'GET',
                                     async: false,
                                     success: function(data, status, xhr){
-                                        if(xhr.status == 200 && (xhr.getResponseHeader('Content-Type').includes('image/png') || xhr.getResponseHeader('Content-Type').includes('image/x-icon') || xhr.getResponseHeader('Content-Type').includes('application/octet-stream'))){
+                                        if(xhr.status == 200){
                                             tool_icon = `<img src="${tool.icon}" />`;
                                         };
                                     }
@@ -107,13 +107,48 @@ async function load_actions(datas){
                     }catch(e){
                         console.log(e);
                     };
-                    // add actions
+                    // add action
                     add_actions(ele_uactions, tool.name, ()=>{
                         ipcRenderer.send('run_cmd',tool.command);
                     }, tool_icon);
                 };
-            } else {
-                // TODO:
+            } else if (tool.type == 'pwa') {
+                // icon
+                let tool_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20V4h20v16zm2-2h10.5v-3.5H4zm12.5 0H20V9h-3.5zM4 12.5h10.5V9H4z"/></svg>';
+                if(tool.icon == '' || tool.icon == null){
+                    // nothing here >w<
+                } else if (tool.icon == 'meta'){
+                    let hostname = new URL(tool.url).hostname;
+                    tool_icon = `<img src="https://toolb.cn/favicon/${hostname}" />`;
+                } else if (tool.icon.startsWith('https')){
+                    if(tool.icon.endsWith('.svg')){
+                        $.ajax({
+                            url: tool.icon,
+                            type: 'GET',
+                            async: false,
+                            success: function(data, status, xhr){
+                                if(xhr.status == 200 && (xhr.getResponseHeader('Content-Type').includes('image/svg+xml') || xhr.getResponseHeader('Content-Type').includes('application/octet-stream'))){
+                                    tool_icon = data;
+                                };
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: tool.icon,
+                            type: 'GET',
+                            async: false,
+                            success: function(data, status, xhr){
+                                if(xhr.status == 200){
+                                    tool_icon = `<img src="${tool.icon}" />`;
+                                };
+                            }
+                        });
+                    };
+                };
+                // add action
+                add_actions(ele_uactions, tool.name, ()=>{
+                    ipcRenderer.send('open_pwa',tool.url);
+                }, tool_icon);
             };
         };
     };
