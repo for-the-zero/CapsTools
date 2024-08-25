@@ -5,17 +5,17 @@
             "name": "Example Tool",
             "if": "//JS conditions code",
             "command": "cmd command here",
-            "icon": "path/to/icon.svg"
+            "icon": "empty/or/path/to/icon-svg-or-png-or.ico/or-link"
         },
         {
             "type": "pwa",
             "name": "Example PWA",
             "url": "https://example.com",
-            "icon": "path/to/icon.svg"
+            "icon": "same/or/meta(this str)"
         }
     ],
     "plugin_tools": [
-        "plugin_folder/plugin.js"
+        "path/to/plugin.cjs"
     ],
     "default_tools": [
         "screenshot",
