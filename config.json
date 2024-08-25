@@ -1,6 +1,8 @@
 {
     "custom_tools": [],
-    "plugin_tools": [],
+    "plugin_tools": [
+        "./plugin_example.cjs"
+    ],
     "default_tools": [
         "screenshot",
         "translate",

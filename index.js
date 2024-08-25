@@ -53,7 +53,7 @@ function create_caps_listener(){
     globalShortcut.register('CapsLock', async()=>{
         caps_status = !caps_status;
         if(caps_status){
-            main_window.webContents.send('reflash', {config: config});
+            main_window.webContents.send('reflash', {config: config, cjs_plugin: cjs_plugins_list});
             main_window.show();
         }else{
             main_window.webContents.send('hide');
@@ -64,7 +64,7 @@ function create_caps_listener(){
 async function toggle_caps_status(){
     caps_status = !caps_status;
     if(caps_status){
-        main_window.webContents.send('reflash', {config: config});
+        main_window.webContents.send('reflash', {config: config, cjs_plugin: cjs_plugins_list});
         main_window.show();
     }else{
         main_window.webContents.send('hide');
@@ -324,6 +324,29 @@ function open_pwa(url){
     ]));
 };
 
+var cjs_plugins_list = [];
+var cjs_plugins_func = [];
+function process_cjsplugins(){
+    let plugin_config = config.plugin_tools;
+    for (let i = 0; i < plugin_config.length; i++){
+        let plugin_path = plugin_config[i];
+        let plugin = require(plugin_path).default;
+        cjs_plugins_list.push({
+            "index": i,
+            "name": plugin.name,
+            "icon": plugin.icon,
+        });
+        cjs_plugins_func.push(plugin.func);
+    }
+};
+ipcMain.on('run_cjs_plugin',(e,index)=>{
+    cjs_plugins_func[index]();
+});
+
+
+
+
+
 
 
 
@@ -375,6 +398,7 @@ function write_config(config){
     };
 };
 read_config();
+process_cjsplugins();
 
 // App
 app.on('ready',()=>{

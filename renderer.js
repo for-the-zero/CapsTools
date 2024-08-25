@@ -42,6 +42,7 @@ function add_actions(ele, text, action, icon){
 };
 async function load_actions(datas){
     let config = datas.config;
+    let cjs_plugin = datas.cjs_plugin;
     ele_uactions.children('div').remove();
     ele_dpactions.children('div').remove();
     
@@ -152,6 +153,60 @@ async function load_actions(datas){
             };
         };
     };
+    // cjs plugin
+    if (cjs_plugin.length > 0){
+        for (let i = 0; i < cjs_plugin.length; i++){
+            let tool = cjs_plugin[i];
+            let tool_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path fill="currentColor" d="M3 21V3h9v2H5v14h14v-7h2v9zm6.7-5.3l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4z"/></svg>';
+            try {
+                if(tool.icon.startsWith('https')){
+                    if(tool.icon.endsWith('.svg')){
+                        $.ajax({
+                            url: tool.icon,
+                            type: 'GET',
+                            async: false,
+                            success: function(data, status, xhr){
+                                if(xhr.status == 200 && (xhr.getResponseHeader('Content-Type').includes('image/svg+xml') || xhr.getResponseHeader('Content-Type').includes('application/octet-stream'))){
+                                    tool_icon = data;
+                                };
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: tool.icon,
+                            type: 'GET',
+                            async: false,
+                            success: function(data, status, xhr){
+                                if(xhr.status == 200){
+                                    tool_icon = `<img src="${tool.icon}" />`;
+                                };
+                            }
+                        });
+                    };
+                } else if(tool.icon.startsWith('<svg')){
+                    tool_icon = tool.icon;
+                } else if(tool.icon.startsWith('file://')){
+                    if(tool.icon.endsWith('.svg')){
+                        let res = await ipcRenderer.invoke('check_svg',tool.icon.replace('file://',''));
+                        if(res[0]){
+                            tool_icon = res[1];
+                        };
+                    } else if(tool.icon.endsWith('.png') || tool.icon.endsWith('.ico')){
+                        let res = await ipcRenderer.invoke('check_img',tool.icon.replace('file://',''));
+                        if(res){
+                            tool_icon = `<img src="${tool.icon}" />`;
+                        };
+                    };
+                };
+            }catch(e){
+                console.log(e);
+            };
+            // add action
+            add_actions(ele_uactions, tool.name, ()=>{
+                ipcRenderer.send('run_cjs_plugin',tool.index);
+            }, tool_icon);
+        };
+    }
 
 
 
