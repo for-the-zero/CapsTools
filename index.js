@@ -2,7 +2,7 @@ const { app, BrowserWindow,
     Tray, Menu, nativeImage,
     ipcMain, globalShortcut,
     dialog, clipboard,
-    shell, 
+    shell, nativeTheme,
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
@@ -213,7 +213,7 @@ ipcMain.on('cliprecog',(event)=>{
         y: 100,
     });
     clip_window.loadFile('default_plugins/clip/clip.html');
-    clip_window.webContents.openDevTools();//
+    //clip_window.webContents.openDevTools();//
     clip_window.webContents.on('did-finish-load', () => {
         clip_window.show();
         clip_window.webContents.send('open_clip', {clip_history: clip_history, config: config});
@@ -385,19 +385,14 @@ function write_config(config){
     if(config){
         fs.writeFileSync(config_file_path, JSON.stringify(config), 'utf-8');
     }else{
-        config = {
-            "collected_tools_id": [],
-            "costom_tools": [],
-            "plugin_tools": [],
-            "default_plugin_settings": {},
-            "app_settings": {
-                "panel_place": "bottom"
-            }
-        };
+        config = {"custom_tools": [],"plugin_tools": [],"default_tools": ["screenshot","translate","cliprecog"],"default_plugin_settings": {"google_translate_mirror": "https://translate.yunkuerp.cn/","clip_quickinput": []},"app_settings": {"panel_place": "bottom","Chinese": false,"light_dark": "auto"}};
         fs.writeFileSync(config_file_path, JSON.stringify(config), 'utf-8');
     };
 };
 read_config();
+if(config.app_settings.light_dark != 'light' && config.app_settings.light_dark != 'dark'){
+    config.app_settings.light_dark = nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
+};
 process_cjsplugins();
 
 // App

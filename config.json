@@ -1,8 +1,6 @@
 {
     "custom_tools": [],
-    "plugin_tools": [
-        "./plugin_example.cjs"
-    ],
+    "plugin_tools": [],
     "default_tools": [
         "screenshot",
         "translate",
@@ -15,6 +13,7 @@
     },
     "app_settings": {
         "panel_place": "bottom",
-        "Chinese": true
+        "Chinese": true,
+        "light_dark": "auto"
     }
 }

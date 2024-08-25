@@ -1,5 +1,5 @@
 const { ipcRenderer, clipboard } = require('electron');
-const { setColorScheme } = require('../../src/mdui.cjs');
+const { setColorScheme, setTheme } = require('../../src/mdui.cjs');
 const $ = require('jquery');
 
 setColorScheme('#EEE444');
@@ -23,12 +23,13 @@ var clip_history = [];
 ipcRenderer.on('open_clip', (e, data) => {
     clip_history = data.clip_history;
     const config = data.config;
+    setTheme(config.app_settings.light_dark);
     if (!config.app_settings.Chinese){
-       $('*').each(function(){
+        $('*').each(function(){
             if ($(this).attr('data-entext')) {
                 $(this).text($(this).attr('data-entext'));
-           };
-       });
+            };
+        });
     };
     if (clip_history.length > 0){
         reflash_clip_list(clip_history);

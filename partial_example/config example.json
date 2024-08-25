@@ -33,6 +33,7 @@
     },
     "app_settings": {
         "panel_place": "bottom",
-        "Chinese": true
+        "Chinese": true,
+        "light_dark": "auto/light/dark"
     }
 }
