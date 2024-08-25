@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap">  
+    <link rel="stylesheet" href="../src/mdui.css">
+    <script>
+        const { TopAppBar, TopAppBarTitle, ButtonIcon
+        } = require('../src/mdui.cjs');
+    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <link rel="stylesheet" href="./set.css">
+</head>
+<body>
+    <mdui-top-app-bar scroll-behavior="elevate">
+        <mdui-top-app-bar-title data-entext="Settings" style="margin-left: 10px;">设置</mdui-top-app-bar-title>
+        <div style="flex-grow: 1;"></div>
+        <mdui-button-icon icon="info--outlined"></mdui-button-icon>
+    </mdui-top-app-bar>
+    
+    <h1>test</h1>
+
+
+
+    <script src="./set.js"></script>
+</body>
+</html>

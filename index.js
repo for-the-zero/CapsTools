@@ -42,6 +42,7 @@ function create_main_window(){
         }
     });
     main_window.loadFile('renderer.html');
+    main_window.setMenu(null);
     main_window.setSkipTaskbar(true);
     main_window.setVisibleOnAllWorkspaces(false);
     //main_window.webContents.openDevTools();//
@@ -71,9 +72,6 @@ async function toggle_caps_status(){
         main_window.hide();
     };
 };
-
-// Settings
-function show_settings(){}; //TODO:
 
 // Screenshot
 ipcMain.on('screenshot',(event)=>{
@@ -143,6 +141,7 @@ ipcMain.on('translate',(event,message)=>{
     });
     translate_window.loadFile('default_plugins/translate/tl.html');
     //translate_window.webContents.openDevTools();
+    translate_window.setMenu(null);
     translate_window.webContents.on('did-finish-load', () => {
         translate_window.show();
         translate_window.webContents.send('translate', {message: message, config: config});
@@ -213,6 +212,7 @@ ipcMain.on('cliprecog',(event)=>{
         y: 100,
     });
     clip_window.loadFile('default_plugins/clip/clip.html');
+    clip_window.setMenu(null);
     //clip_window.webContents.openDevTools();//
     clip_window.webContents.on('did-finish-load', () => {
         clip_window.show();
@@ -244,8 +244,12 @@ ipcMain.on('save_text',(event,obj)=>{
     });
 });
 ipcMain.on('translate_text',(event,text)=>{
-    let translate_window = new BrowserWindow({title: config.app_settings.Chinese ? '翻译' : 'Translate',show: false,frame: true,autoHideMenuBar: true,icon: 'src/icon.png', webPreferences: {nodeIntegration: true,enableRemoteModule: true,contextIsolation: false,webviewTag: true}});translate_window.loadFile('default_plugins/translate/tl.html');translate_window.webContents.on('did-finish-load', () => {translate_window.show();
-    translate_window.webContents.send('translate', {message: {from: 'cn', to: 'en', text: text}, config: config});});
+    let translate_window = new BrowserWindow({title: config.app_settings.Chinese ? '翻译' : 'Translate',show: false,frame: true,autoHideMenuBar: true,icon: 'src/icon.png', webPreferences: {nodeIntegration: true,enableRemoteModule: true,contextIsolation: false,webviewTag: true}});translate_window.loadFile('default_plugins/translate/tl.html');
+    translate_window.setMenu(null);
+    translate_window.webContents.on('did-finish-load', () => {
+        translate_window.show();
+        translate_window.webContents.send('translate', {message: {from: 'cn', to: 'en', text: text}, config: config});
+    });
 });
 ipcMain.on('save_image',(e,nimg)=>{
     dialog.showSaveDialog({
@@ -344,6 +348,29 @@ ipcMain.on('run_cjs_plugin',(e,index)=>{
 });
 
 
+
+// Settings
+function show_settings(){
+    let settings_window = new BrowserWindow({
+        title: config.app_settings.Chinese ? '设置' : 'Settings',
+        show: false,
+        frame: true,
+        autoHideMenuBar: true,
+        icon: 'src/icon.png',
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
+        },
+    });
+    settings_window.setMenu(null);
+    settings_window.loadFile('setting_page/set.html');
+    settings_window.webContents.openDevTools();//TODO: remove
+    settings_window.webContents.on('did-finish-load', () => {
+        settings_window.show();
+        settings_window.webContents.send('open_set', {config: config});
+    });
+};
 
 
 
