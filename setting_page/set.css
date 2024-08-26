@@ -9,7 +9,7 @@ mdui-segmented-button-group{
 }
 .cqi-panel, .cjsp-panel, .up-panel{
     width: calc(100vw - 40px);
-    height: 222px;
+    height: 250px;
     margin-top: 8px;
     margin-bottom: 8px;
     margin-left: 16px;
@@ -43,4 +43,5 @@ mdui-divider{
 }
 .up-table > table > tbody > tr > td{
     white-space: nowrap;
+    user-select: text;
 }

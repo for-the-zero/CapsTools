@@ -334,14 +334,18 @@ function process_cjsplugins(){
     let plugin_config = config.plugin_tools;
     for (let i = 0; i < plugin_config.length; i++){
         let plugin_path = plugin_config[i];
-        let plugin = require(plugin_path).default;
-        cjs_plugins_list.push({
-            "index": i,
-            "name": plugin.name,
-            "icon": plugin.icon,
-        });
-        cjs_plugins_func.push(plugin.func);
-    }
+        try{
+            let plugin = require(plugin_path).default;
+            cjs_plugins_list.push({
+                "index": i,
+                "name": plugin.name,
+                "icon": plugin.icon,
+            });
+            cjs_plugins_func.push(plugin.func);
+        } catch (error) {
+            console.log(error);
+        };
+    };
 };
 ipcMain.on('run_cjs_plugin',(e,index)=>{
     cjs_plugins_func[index]();
