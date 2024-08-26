@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap">  
     <link rel="stylesheet" href="../src/mdui.css">
     <script>
@@ -12,7 +11,8 @@
             List, ListItem, ListSubheader, Tooltip,
             //Select, MenuItem,
             SegmentedButton, SegmentedButtonGroup, Switch,
-            TextField, Button, Divider, Card
+            TextField, Button, Divider, Card,
+            Dialog,
         } = require('../src/mdui.cjs');
     </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -84,6 +84,7 @@
             <mdui-switch slot="end-icon"></mdui-switch>
         </mdui-list-item>
 
+
         <mdui-list-subheader data-entext="Default tools settings">默认工具设置</mdui-list-subheader>
         <mdui-list-item icon="file_download--outlined" nonclickable>
             <div data-entext="Screenshot Save Path">截图保存路径</div>
@@ -107,7 +108,6 @@
             </div>
             <mdui-divider></mdui-divider>
             <mdui-list class="cqi-list">
-                <mdui-list-item nonclickable>111<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
                 <!--
                 <mdui-list-item nonclickable>111<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
                 <mdui-list-item nonclickable>222<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
@@ -118,7 +118,63 @@
             </mdui-list>
         </mdui-card>
 
+
+        <mdui-list-subheader data-entext="More tools">更多工具</mdui-list-subheader>
+        <mdui-list-item icon="extension--outlined" nonclickable>
+            <div data-entext="CommonJS plugins">CommonJS 插件</div>
+        </mdui-list-item>
+        <mdui-card variant="outlined" class="cjsp-panel">
+            <div class="cjsp-ctrl">
+                <mdui-text-field></mdui-text-field>
+                <mdui-button variant="elevated" data-entext="Add" icon="add">添加</mdui-button>
+            </div>
+            <mdui-divider></mdui-divider>
+            <mdui-list class="cjsp-list">
+                <!--<mdui-list-item nonclickable>111<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>-->
+            </mdui-list>
+        </mdui-card>
+
+        <mdui-list-item icon="extension--outlined" nonclickable>
+            <div data-entext="User plugins">用户插件</div>
+        </mdui-list-item>
+        <mdui-card variant="outlined" class="up-panel">
+            <div class="up-ctrl"><mdui-button variant="elevated" data-entext="Add" icon="add">添加</mdui-button></div>
+            <mdui-divider></mdui-divider>
+            <div class="up-table mdui-table">
+                <table>
+                    <thead><tr>
+                        <th>type</th>
+                        <th>name</th>
+                        <th>icon</th>
+                        <th>if(cmd)</th>
+                        <th>command(cmd)</th>
+                        <th>url(pwa)</th>
+                    </tr></thead>
+                    <tbody>
+                        <!--
+                        <tr>
+                            <td>cmd</td>
+                            <td>Example Tool</td>
+                            <td>empty/or/path/to/icon-svg-or-png-or.ico/or-link</td>
+                            <td>//JS conditions code</td>
+                            <td>cmd command here</td>
+                            <td></td>
+                        </tr>
+                        -->
+                    </tbody>
+                </table>
+            </div>
+        </mdui-card>
+
     </mdui-list>
+
+    <mdui-dialog close-on-esc close-on-overlay-click open>
+        <h1><img src="../src/icon.png" height="100px" />CapsTools</h1>
+        <p data-entext="I don't know what to write here, just write this for now'">不知道写什么，先写这一点吧</p>
+        <p style="user-select: text;">Github: https://github.com/for-the-zero/CapsTools</p>
+        <iframe style="width: 100%;height: 150px;box-sizing: border-box;" src="../LICENSE"></iframe>
+        <iframe style="width: 100%;height: 150px;box-sizing: border-box;" src="../third-party.LICENSE.txt"></iframe>
+    </mdui-dialog>
 
 
 
