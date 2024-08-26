@@ -4,3 +4,37 @@ body{
     padding: 0;
     user-select: none;
 }
+mdui-segmented-button-group{
+    width: 200px;
+}
+.cqi-panel{
+    width: calc(100vw - 40px);
+    height: 222px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+    margin-right: 24px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.cqi-ctrl{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+mdui-divider{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.cqi-list{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+.cqi-list > mdui-list-item{
+    user-select: text;
+}

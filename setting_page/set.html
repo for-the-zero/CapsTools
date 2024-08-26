@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap">  
     <link rel="stylesheet" href="../src/mdui.css">
     <script>
-        const { TopAppBar, TopAppBarTitle, ButtonIcon
+        const { TopAppBar, TopAppBarTitle, ButtonIcon,
+            List, ListItem, ListSubheader, Tooltip,
+            //Select, MenuItem,
+            SegmentedButton, SegmentedButtonGroup, Switch,
+            TextField, Button, Divider, Card
         } = require('../src/mdui.cjs');
     </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -20,10 +24,101 @@
     <mdui-top-app-bar scroll-behavior="elevate">
         <mdui-top-app-bar-title data-entext="Settings" style="margin-left: 10px;">设置</mdui-top-app-bar-title>
         <div style="flex-grow: 1;"></div>
-        <mdui-button-icon icon="info--outlined"></mdui-button-icon>
+        <mdui-tooltip placement="left">
+            <mdui-button-icon icon="save--outlined"></mdui-button-icon>
+            <div slot="content" data-entext="Save: Restart to apply">保存：重启应用生效</div>
+        </mdui-tooltip>
+        <mdui-tooltip placement="left">
+            <mdui-button-icon icon="info--outlined"></mdui-button-icon>
+            <div slot="content" data-entext="About">关于</div>
+        </mdui-tooltip>
     </mdui-top-app-bar>
-    
-    <h1>test</h1>
+
+
+    <mdui-list>
+
+
+        <mdui-list-subheader data-entext="General">常规</mdui-list-subheader>
+        <mdui-list-item icon="translate" nonclickable>
+            <div data-entext="Language">语言</div>
+            <!--
+            <mdui-select variant="outlined" slot="end-icon">
+                <mdui-menu-item value="false">English(en)</mdui-menu-item>
+                <mdui-menu-item value="true">中文(zh)</mdui-menu-item>
+            </mdui-select>
+            -->
+            <mdui-segmented-button-group selects="single" slot="end-icon">
+                <mdui-segmented-button value="false">English(en)</mdui-segmented-button>
+                <mdui-segmented-button value="true">中文(zh)</mdui-segmented-button>
+            </mdui-segmented-button-group>
+        </mdui-list-item>
+
+        <mdui-list-item icon="light_mode--outlined" nonclickable>
+            <div data-entext="Light/Dark Mode">亮、暗色</div>
+            <mdui-segmented-button-group selects="single" slot="end-icon">
+                <mdui-segmented-button data-entext="Light" value="light">亮色</mdui-segmented-button>
+                <mdui-segmented-button data-entext="Dark" value="dark">暗色</mdui-segmented-button>
+            </mdui-segmented-button-group>
+        </mdui-list-item>
+
+        <mdui-list-item icon="location_on--outlined" nonclickable>
+            <div data-entext="Panel Position">面板位置</div>
+            <mdui-segmented-button-group selects="single" slot="end-icon">
+                <mdui-segmented-button data-entext="Top" value="top">顶部</mdui-segmented-button>
+                <mdui-segmented-button data-entext="Bottom" value="bottom">底部</mdui-segmented-button>
+            </mdui-segmented-button-group>
+        </mdui-list-item>
+
+
+        <mdui-list-subheader data-entext="Enable default tools">默认工具开启</mdui-list-subheader>
+        <mdui-list-item icon="screenshot_monitor" nonclickable>
+            <div data-entext="Screenshot">截图</div>
+            <mdui-switch slot="end-icon"></mdui-switch>
+        </mdui-list-item>
+        <mdui-list-item icon="g_translate--outlined" nonclickable>
+            <div data-entext="Translate">翻译</div>
+            <mdui-switch slot="end-icon"></mdui-switch>
+        </mdui-list-item>
+        <mdui-list-item icon="content_paste_search" nonclickable>
+            <div data-entext="ClipRecog">剪贴板识别</div>
+            <mdui-switch slot="end-icon"></mdui-switch>
+        </mdui-list-item>
+
+        <mdui-list-subheader data-entext="Default tools settings">默认工具设置</mdui-list-subheader>
+        <mdui-list-item icon="file_download--outlined" nonclickable>
+            <div data-entext="Screenshot Save Path">截图保存路径</div>
+            <span slot="description">This is Path and will be change by js</span>
+            <mdui-button-icon icon="edit" slot="end-icon"></mdui-button-icon>
+        </mdui-list-item>
+
+        <mdui-list-item icon="turn_right" nonclickable>
+            <div data-entext="Google Translate Mirror">谷歌翻译镜像</div>
+            <span slot="description">js!js!js!</span>
+            <mdui-button-icon icon="edit" slot="end-icon"></mdui-button-icon>
+        </mdui-list-item>
+
+        <mdui-list-item icon="short_text" nonclickable>
+            <div data-entext="Clipboard Quick Input">剪贴板快速输入</div>
+        </mdui-list-item>
+        <mdui-card variant="outlined" class="cqi-panel">
+            <div class="cqi-ctrl">
+                <mdui-text-field></mdui-text-field>
+                <mdui-button variant="elevated" data-entext="Add" icon="add">添加</mdui-button>
+            </div>
+            <mdui-divider></mdui-divider>
+            <mdui-list class="cqi-list">
+                <mdui-list-item nonclickable>111<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
+                <!--
+                <mdui-list-item nonclickable>111<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
+                <mdui-list-item nonclickable>222<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
+                <mdui-list-item nonclickable>333<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
+                <mdui-list-item nonclickable>444<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
+                <mdui-list-item nonclickable>555<mdui-button-icon slot="end-icon" icon="close"></mdui-button-icon></mdui-list-item>
+                -->
+            </mdui-list>
+        </mdui-card>
+
+    </mdui-list>
 
 
 

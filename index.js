@@ -79,7 +79,7 @@ ipcMain.on('screenshot',(event)=>{
         if (!caps_status) {
             clearInterval(wait_interval);
             let shot = get_screenshot().buffer;
-            if (config.default_plugin_settings.screenshot_save_path){
+            if (config.default_plugin_settings.screenshot_save_path && config.default_plugin_settings.screenshot_save_path != ''){
                 let filePath = config.default_plugin_settings.screenshot_save_path;
                 if (!filePath.endsWith(path.sep)){filePath = filePath + path.sep};
                 filePath = filePath + `screenshot_${Date.now()}.png`;

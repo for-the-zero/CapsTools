@@ -2,7 +2,8 @@ const { ipcRenderer } = require('electron');
 const { setColorScheme, setTheme } = require('../src/mdui.cjs');
 const $ = require('jquery');
 
-setColorScheme('#EEE444');
+//setColorScheme('#5577FF');
+setColorScheme('#FB9944');
 
 var config = {};
 ipcRenderer.on('open_set', (event, datas) => {
