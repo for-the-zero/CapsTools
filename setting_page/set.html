@@ -56,6 +56,7 @@
         <mdui-list-item icon="light_mode--outlined" nonclickable>
             <div data-entext="Light/Dark Mode">亮、暗色</div>
             <mdui-segmented-button-group selects="single" slot="end-icon" class="lm-opt">
+                <mdui-segmented-button data-entext="Auto" value="auto">自动</mdui-segmented-button>
                 <mdui-segmented-button data-entext="Light" value="light">亮色</mdui-segmented-button>
                 <mdui-segmented-button data-entext="Dark" value="dark">暗色</mdui-segmented-button>
             </mdui-segmented-button-group>
@@ -73,26 +74,26 @@
         <mdui-list-subheader data-entext="Enable default tools">默认工具开启</mdui-list-subheader>
         <mdui-list-item icon="screenshot_monitor" nonclickable>
             <div data-entext="Screenshot">截图</div>
-            <mdui-switch slot="end-icon"></mdui-switch>
+            <mdui-switch class="open-ss" slot="end-icon"></mdui-switch>
         </mdui-list-item>
         <mdui-list-item icon="g_translate--outlined" nonclickable>
             <div data-entext="Translate">翻译</div>
-            <mdui-switch slot="end-icon"></mdui-switch>
+            <mdui-switch class="open-tl" slot="end-icon"></mdui-switch>
         </mdui-list-item>
         <mdui-list-item icon="content_paste_search" nonclickable>
             <div data-entext="ClipRecog">剪贴板识别</div>
-            <mdui-switch slot="end-icon"></mdui-switch>
+            <mdui-switch class="open-cr" slot="end-icon"></mdui-switch>
         </mdui-list-item>
 
 
         <mdui-list-subheader data-entext="Default tools settings">默认工具设置</mdui-list-subheader>
-        <mdui-list-item icon="file_download--outlined" nonclickable>
+        <mdui-list-item class="ss-path" icon="file_download--outlined" nonclickable>
             <div data-entext="Screenshot Save Path">截图保存路径</div>
             <span slot="description">This is Path and will be change by js</span>
             <mdui-button-icon icon="edit" slot="end-icon"></mdui-button-icon>
         </mdui-list-item>
 
-        <mdui-list-item icon="turn_right" nonclickable>
+        <mdui-list-item class="gtm-url" icon="turn_right" nonclickable>
             <div data-entext="Google Translate Mirror">谷歌翻译镜像</div>
             <span slot="description">js!js!js!</span>
             <mdui-button-icon icon="edit" slot="end-icon"></mdui-button-icon>

@@ -1,15 +1,35 @@
 {
-    "custom_tools": [],
-    "plugin_tools": [],
+    "custom_tools": [
+        {
+            "type": "cmd",
+            "name": "Example Tool",
+            "if": "true",
+            "command": "calc",
+            "icon": "empty/or/path/to/icon-svg-or-png-or.ico/or-link"
+        },
+        {
+            "type": "pwa",
+            "name": "Example PWA",
+            "url": "https://example.com",
+            "icon": "same/or/meta(this str)"
+        }
+    ],
+    "plugin_tools": [
+        "./partial_example/plugin_example.cjs"
+    ],
     "default_tools": [
         "screenshot",
         "translate",
         "cliprecog"
     ],
     "default_plugin_settings": {
-        "screenshot_save_path": "C:/Users/hao/Desktop",
+        "screenshot_save_path": "path/to/sateve/screenshot/or/no/such/item",
         "google_translate_mirror": "https://translate.yunkuerp.cn/",
-        "clip_quickinput": []
+        "clip_quickinput": [
+            "text",
+            "example",
+            "½"
+        ]
     },
     "app_settings": {
         "panel_place": "bottom",
