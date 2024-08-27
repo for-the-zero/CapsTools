@@ -331,6 +331,8 @@ function open_pwa(url){
 var cjs_plugins_list = [];
 var cjs_plugins_func = [];
 function process_cjsplugins(){
+    cjs_plugins_list = [];
+    cjs_plugins_func = [];
     let plugin_config = config.plugin_tools;
     for (let i = 0; i < plugin_config.length; i++){
         let plugin_path = plugin_config[i];
@@ -369,7 +371,7 @@ function show_settings(){
     });
     settings_window.setMenu(null);
     settings_window.loadFile('setting_page/set.html');
-    settings_window.webContents.openDevTools();//TODO: remove
+    //settings_window.webContents.openDevTools();//
     settings_window.webContents.on('did-finish-load', () => {
         settings_window.show();
         settings_window.webContents.send('open_set', {config: config});
@@ -425,6 +427,10 @@ if(config.app_settings.light_dark != 'light' && config.app_settings.light_dark !
     config.app_settings.light_dark = nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
 };
 process_cjsplugins();
+ipcMain.on('save_settings',(e,new_config)=>{
+    //config = new_config;
+    write_config(new_config);
+});
 
 // App
 app.on('ready',()=>{

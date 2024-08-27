@@ -235,5 +235,70 @@ function init_config(){
 };
 
 ele_savebtn.on('click',() => {
-    //TODO:
+    let lang = ele_lang_opt.val() === 'true' ? true : false;
+    let lm = ele_lm_opt.val();
+    let pp = ele_pp_opt.val();
+    let sspath = ele_sspath_span.text();
+    let gtm = ele_gtm_span.text();
+    let df_tools = [];
+    if(ele_openss.attr('checked')){
+        df_tools.push('screenshot');
+    };
+    if(ele_opentl.attr('checked')){
+        df_tools.push('translate');
+    };
+    if(ele_opencr.attr('checked')){
+        df_tools.push('cliprecog');
+    };
+    let cqi = [];
+    ele_cqi_list.children().each(function(){
+        cqi.push($(this).text());
+    });
+    let cjsp = [];
+    ele_cjsp_list.children().each(function(){
+        cjsp.push($(this).text());
+    });
+    let up_list = [];
+    ele_up_tbody.children().each(function(){
+        let type = $(this).find('td:eq(0)').text();
+        let name = $(this).find('td:eq(1)').text();
+        let icon = $(this).find('td:eq(2)').text();
+        let if_ = $(this).find('td:eq(3)').text();
+        let command = $(this).find('td:eq(4)').text();
+        let url = $(this).find('td:eq(5)').text();
+        if (type === 'cmd'){
+            up_list.push({
+                type: 'cmd',
+                name: name,
+                icon: icon,
+                if: if_,
+                command: command,
+            });
+        } else {
+            up_list.push({
+                type: 'pwa',
+                name: name,
+                icon: icon,
+                url: url,
+            });
+        };
+    });
+    
+    let new_config = {
+        app_settings: {
+            Chinese: lang,
+            light_dark: lm,
+            panel_place: pp,
+        },
+        default_plugin_settings: {
+            screenshot_save_path: sspath,
+            google_translate_mirror: gtm,
+            clip_quickinput: cqi,
+        },
+        default_tools: df_tools,
+        plugin_tools: cjsp,
+        custom_tools: up_list,
+    };
+    console.log(new_config);
+    ipcRenderer.send('save_settings', new_config);
 });
