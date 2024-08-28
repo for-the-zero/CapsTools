@@ -1,1 +1,19 @@
-{"app_settings":{"Chinese":false,"light_dark":"light","panel_place":"bottom"},"default_plugin_settings":{"screenshot_save_path":"path/to/sateve/screenshot/or/no/such/item","google_translate_mirror":"https://translate.yunkuerp.cn/","clip_quickinput":["½"]},"default_tools":["screenshot","translate","cliprecog"],"plugin_tools":["./partial_example/plugin_example.cjs"],"custom_tools":[{"type":"cmd","name":"Example Tool","icon":"empty/or/path/to/icon-svg-or-png-or.ico/or-link","if":"true","command":"calc"},{"type":"pwa","name":"Example PWA","icon":"same/or/meta(this str)","url":"https://example.com"}]}
+{
+    "custom_tools": [],
+    "plugin_tools": [],
+    "default_tools": [
+        "screenshot",
+        "translate",
+        "cliprecog"
+    ],
+    "default_plugin_settings": {
+        "screenshot_save_path": "",
+        "google_translate_mirror": "https://translate.yunkuerp.cn/",
+        "clip_quickinput": []
+    },
+    "app_settings": {
+        "panel_place": "bottom",
+        "Chinese": false,
+        "light_dark": "auto"
+    }
+}

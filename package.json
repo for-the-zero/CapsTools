@@ -1,25 +1,68 @@
 {
   "name": "capstools",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Toolbox using CapsLock key",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "for_the_zero",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^20.3.12",
-    "parcel-bundler": "^1.12.5"
+    "electron-builder": "^25.0.0-alpha.9",
+    "parcel-bundler": "^1.12.5",
+    "electron-rebuild": "^3.2.9"
   },
   "dependencies": {
-    "electron-rebuild": "^3.2.9",
     "esm": "^3.2.25",
     "jquery": "^3.7.1",
     "mdui": "^2.1.2",
     "pngjs": "^7.0.0",
     "robotjs": "^0.6.0"
+  },
+  "build": {
+    "appId": "io.forthezero.capstools",
+    "productName": "CapsTools",
+    "copyright": "Copyright © 2024-present for_the_zero",
+    "win": {
+      "target": "zip",
+      "icon": "src/icon.ico"
+    },
+    "files":[
+      "!partial_example/**/*",
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "**/*.html",
+      "**/*.js",
+      "**/*.css",
+      "LICENSE",
+      "third-party.LICENSE.txt"
+    ],
+    "extraFiles": [
+      "src/icon.png",
+      "src/icon.ico",
+      "LICENSE",
+      "third-party.LICENSE.txt",
+      "config.json"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "src/icon.ico",
+      "uninstallerIcon": "src/icon.ico",
+      "installerHeaderIcon": "src/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CapsTools"
+    },
+    "directories": {
+      "buildResources": "src",
+      "output": "builds"
+    }
   }
 }

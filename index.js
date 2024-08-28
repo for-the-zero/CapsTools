@@ -4,7 +4,7 @@ const { app, BrowserWindow,
     dialog, clipboard,
     shell, nativeTheme,
 } = require('electron');
-const fs = require('fs');
+const fs = require('original-fs');
 const path = require('path');
 const robot = require('robotjs');
 const { PNG } = require('pngjs');
@@ -401,7 +401,7 @@ if (!sil) {
 // Config
 var config = {};
 function read_config(){
-    let config_file_path = path.join(app.getAppPath(), 'config.json');
+    let config_file_path = path.join(path.dirname(process.execPath), 'config.json');
     try{
         if(fs.existsSync(config_file_path)){
             config = JSON.parse(fs.readFileSync(config_file_path, 'utf-8'));
@@ -414,7 +414,7 @@ function read_config(){
     };
 };
 function write_config(config){
-    let config_file_path = path.join(app.getAppPath(), 'config.json');
+    let config_file_path = path.join(path.dirname(process.execPath), 'config.json');
     if(config){
         fs.writeFileSync(config_file_path, JSON.stringify(config), 'utf-8');
     }else{
