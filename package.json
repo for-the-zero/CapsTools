@@ -29,7 +29,7 @@
     "productName": "CapsTools",
     "copyright": "Copyright © 2024-present for_the_zero",
     "win": {
-      "target": "zip",
+      "target": ["zip", "nsis"],
       "icon": "src/icon.ico"
     },
     "files":[
@@ -45,6 +45,10 @@
     "extraFiles": [
       "config.json",
       "partial_example/**/*"
+    ],
+    "asarUnpack": [
+      "src/icon.png",
+      "src/icon.ico"
     ],
     "nsis": {
       "oneClick": false,

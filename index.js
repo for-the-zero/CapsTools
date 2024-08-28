@@ -13,7 +13,7 @@ const { exec } = require('child_process');
 // Tray
 let tray = null;
 function create_tray() {
-    tray = new Tray(nativeImage.createFromPath('src/icon.png'));
+    tray = new Tray(nativeImage.createFromPath(path.join(path.dirname(process.execPath), 'resources','app.asar.unpacked','src' ,'icon.png')));
     const contextMenu = Menu.buildFromTemplate([
         { label: config.app_settings.Chinese ? '切换大小锁定状态' : 'Toggle Caps Lock Status', click: toggle_caps_status },
         { label: config.app_settings.Chinese ? '设置' : 'Settings', click: show_settings },
@@ -131,7 +131,7 @@ ipcMain.on('translate',(event,message)=>{
         show: false,
         frame: true,
         autoHideMenuBar: true,
-        icon: 'src/icon.png',
+        icon: path.join(path.dirname(process.execPath), 'resources','app.asar.unpacked','src' ,'icon.png'),
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -200,7 +200,7 @@ ipcMain.on('cliprecog',(event)=>{
         autoHideMenuBar: true,
         fullscreenable: false,
         maximizable: false,
-        icon: 'src/icon.png',
+        icon: path.join(path.dirname(process.execPath), 'resources','app.asar.unpacked','src' ,'icon.png'),
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -244,7 +244,7 @@ ipcMain.on('save_text',(event,obj)=>{
     });
 });
 ipcMain.on('translate_text',(event,text)=>{
-    let translate_window = new BrowserWindow({title: config.app_settings.Chinese ? '翻译' : 'Translate',show: false,frame: true,autoHideMenuBar: true,icon: 'src/icon.png', webPreferences: {nodeIntegration: true,enableRemoteModule: true,contextIsolation: false,webviewTag: true}});translate_window.loadFile('default_plugins/translate/tl.html');
+    let translate_window = new BrowserWindow({title: config.app_settings.Chinese ? '翻译' : 'Translate',show: false,frame: true,autoHideMenuBar: true,icon: path.join(path.dirname(process.execPath), 'resources','app.asar.unpacked','src' ,'icon.png'), webPreferences: {nodeIntegration: true,enableRemoteModule: true,contextIsolation: false,webviewTag: true}});translate_window.loadFile('default_plugins/translate/tl.html');
     translate_window.setMenu(null);
     translate_window.webContents.on('did-finish-load', () => {
         translate_window.show();
@@ -362,7 +362,7 @@ function show_settings(){
         show: false,
         frame: true,
         autoHideMenuBar: true,
-        icon: 'src/icon.png',
+        icon: path.join(path.dirname(process.execPath), 'resources','app.asar.unpacked','src' ,'icon.png'),
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -371,7 +371,7 @@ function show_settings(){
     });
     settings_window.setMenu(null);
     settings_window.loadFile('setting_page/set.html');
-    settings_window.webContents.openDevTools();//
+    //settings_window.webContents.openDevTools();//
     settings_window.webContents.on('did-finish-load', () => {
         settings_window.show();
         settings_window.webContents.send('open_set', {config: config});
