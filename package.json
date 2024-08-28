@@ -33,22 +33,18 @@
       "icon": "src/icon.ico"
     },
     "files":[
-      "!partial_example/**/*",
-      "src/**/*",
-      "node_modules/**/*",
-      "package.json",
-      "**/*.html",
-      "**/*.js",
-      "**/*.css",
+      "**/*",
+      "src/icon.png",
+      "src/icon.ico",
+      "src/mdui.css",
+      "src/mdui.js",
+      "src/*",
       "LICENSE",
       "third-party.LICENSE.txt"
     ],
     "extraFiles": [
-      "src/icon.png",
-      "src/icon.ico",
-      "LICENSE",
-      "third-party.LICENSE.txt",
-      "config.json"
+      "config.json",
+      "partial_example/**/*"
     ],
     "nsis": {
       "oneClick": false,

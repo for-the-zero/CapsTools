@@ -371,7 +371,7 @@ function show_settings(){
     });
     settings_window.setMenu(null);
     settings_window.loadFile('setting_page/set.html');
-    //settings_window.webContents.openDevTools();//
+    settings_window.webContents.openDevTools();//
     settings_window.webContents.on('did-finish-load', () => {
         settings_window.show();
         settings_window.webContents.send('open_set', {config: config});
