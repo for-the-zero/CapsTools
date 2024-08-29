@@ -42,7 +42,7 @@
 
 ## 许可证
 
-[MIT](https://github.com/for-the-zero/CapsTools/blob/main/LICENSE)
+[MIT](https://github.com/for-the-zero/CapsTools/blob/master/LICENSE)
 
 ## 安装
 
@@ -102,7 +102,7 @@ Most of the interface uses Material You (although I wrote the theme color~~ but 
 
 ## License
 
-[MIT](https://github.com/for-the-zero/CapsTools/blob/main/LICENSE)
+[MIT](https://github.com/for-the-zero/CapsTools/blob/master/LICENSE)
 
 ## Install
 
