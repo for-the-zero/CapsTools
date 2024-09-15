@@ -65,7 +65,7 @@ function reflash_clip_list(){
         let thisclip = clip_history[i];
         if (thisclip.image !== null){
             let img = thisclip.image;
-            img = img.resize({width: 60});
+            img = img.resize({width: 30});
             img = img.toDataURL();
             let img_html = `<img height="60" src="${img}">`;
             let html = `<mdui-card class="clip-item clip-item-special" variant="outlined" clickable>${img_html}</mdui-card>`;
@@ -81,7 +81,7 @@ function reflash_clip_list(){
             ele_to_add.on('click',item_click);
             ele_to_add.on('contextmenu',item_contextmenu);
             ele_cliplist.append(ele_to_add);
-        } else {
+        } else if (thisclip.text !== '' && thisclip.text !== null){
             let html = `<mdui-card class="clip-item" variant="outlined" clickable><span>${thisclip.text}</span></mdui-card>`;
             let ele_to_add = $(html);
             ele_to_add.data('obj', thisclip);
@@ -109,7 +109,7 @@ function item_contextmenu(){
     editing_clip = $(this).data('obj');
     if (editing_clip.image !== null){
         ele_imga.attr('open',true);
-    } else if (editing_clip.html !== '' || editing_clip.text !== '') {
+    } else {
         ele_texta.attr('open',true);
     };
 };

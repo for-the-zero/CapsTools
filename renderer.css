@@ -1,6 +1,10 @@
+@font-face {
+    font-family: 'Wanted Sans Std';
+    src: url('./src/WantedSansStd-Regular.otf');
+}
 body{
     background-color: rgb(30,30,30,0.5);
-    font-family: 'Google Sans','Noto Sans SC';
+    font-family: 'Wanted Sans Std','Noto Sans SC';
     color: #E6E6E6;
     display: flex;
     justify-content: center;

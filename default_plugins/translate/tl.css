@@ -1,5 +1,9 @@
+@font-face {
+    font-family: 'Wanted Sans Std';
+    src: url('../../src/WantedSansStd-Regular.otf');
+}
 body{
-    font-family: 'Noto Sans SC';
+    font-family: 'Wanted Sans Std', 'Noto Sans SC';
     color: #303030;
     margin: 0;
     padding: 0;
